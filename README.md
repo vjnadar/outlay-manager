@@ -31,7 +31,7 @@ A Full Stack Web Application that uses **React JS, Redux JS**, **Node JS/Express
 9. Yup (form validator)
 
 <p align="left">
-  <img src="https://i.imgur.com/Wh9hEFD.png" width="35%" height="35%">
+  <img src="https://i.imgur.com/FEusJnt.png" width="50%" height="50%">
 </p>
 
 <p align="right">
