@@ -7,7 +7,7 @@ const GrandTotalTable = props => {
       <thead>
         <tr>
           <th>Total Income</th>
-          <th>Total Expenditure</th>
+          <th>Total Expense</th>
           <th>Balance</th>
         </tr>
       </thead>
