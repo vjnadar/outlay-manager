@@ -6,6 +6,7 @@ A Full Stack Web Application that uses **React JS, Redux JS**, **Node JS/Express
 
 **Key features**
 - A **MERN stack** application. It helps you to keep track of your expenses.
+- It follows the **decoupled architecture paradigm**.
 - It uses **Node JS/Express JS** along with **MongoDB**.
 - It uses **React JS** and **Redux JS**.
 - It uses the **factory design pattern** to create components.
