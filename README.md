@@ -9,6 +9,7 @@ A Full Stack Web Application that uses **React JS, Redux JS**, **Node JS/Express
 - It follows the **decoupled architecture paradigm**.
 - It uses **Node JS/Express JS** along with **MongoDB**.
 - It uses **React JS** and **Redux JS**.
+- It's fully **responsive**.
 - It uses the **factory design pattern** to create components.
 - It uses **JSON web token (JWT)** for authentication.
 
@@ -30,7 +31,7 @@ A Full Stack Web Application that uses **React JS, Redux JS**, **Node JS/Express
 9. Yup (form validator)
 
 <p align="left">
-  <img src="https://i.imgur.com/kDNFe4t.jpg" width="85%" height="85%">
+  <img src="https://i.imgur.com/Wh9hEFD.png" width="35%" height="35%">
 </p>
 
 <p align="right">
