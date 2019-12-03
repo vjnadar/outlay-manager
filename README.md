@@ -26,8 +26,8 @@ A Full Stack Web Application that uses **React JS, Redux JS**, **Node JS/Express
 5. Reactstrap(a flavour of Bootstrap)
 6. Sass
 7. Chart JS
-8. Formik (form handling)
-9. Yup (form validation)
+8. Formik (form handler)
+9. Yup (form validator)
 
 <p align="left">
   <img src="https://i.imgur.com/kDNFe4t.jpg" width="85%" height="85%">
