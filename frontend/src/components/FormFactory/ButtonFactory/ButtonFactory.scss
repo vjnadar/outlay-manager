@@ -1,0 +1,19 @@
+.button {
+  display: inline-block;
+  background: white;
+  color: rgb(10, 10, 10);
+  padding: 0.2rem 0.5rem;
+  width: 6rem;
+  margin: 0.7rem 0.2rem;
+  border-radius: 0.3rem;
+  border: 0.07rem solid rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+.button:active,
+.button:hover {
+  background: rgb(7, 53, 105);
+  color: white;
+}
+.button:focus {
+  outline: none;
+}
