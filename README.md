@@ -69,7 +69,7 @@ A Full Stack Web Application that uses **React JS, Redux JS**, **Node JS/Express
 1. Copy this repository and enter the **backend** directory using the terminal.
 2. Make sure to create the mongo db schema by running the script file inside **/backend/mongoDBScripts**.
 You can use the shell terminal.
-3. Create a new `.env` by refering the .env_sample file, inside the root folder.
+3. Create a new `.env` file by refering the .env_sample file, inside the root folder.
 4. Use **npm install** to install the necessary node modules.
 6. Use **npm start** to start up the backend server.
 
