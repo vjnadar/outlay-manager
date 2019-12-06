@@ -16,4 +16,11 @@ router.post(
   authenticationController.signin
 );
 
+router.put(
+  "/resetPasswordRequest",
+  authenticationController.resetPasswordRequest
+);
+
+router.put("/resetPassword", authenticationController.resetPassword);
+
 module.exports = router;

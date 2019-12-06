@@ -79,6 +79,22 @@ exports.catchError = (type, response) => {
       }
       break;
     }
+    case "emailWasNotSent": {
+      if (!response) {
+        let error = new Error("The email was not sent!");
+        error.statusCode = 400;
+        throw error;
+      }
+      break;
+    }
+    case "isRegisteredToken": {
+      if (!response) {
+        let error = new Error("The token is not registered");
+        error.statusCode = 400;
+        throw error;
+      }
+      break;
+    }
     default: {
       return;
     }

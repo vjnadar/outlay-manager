@@ -30,6 +30,28 @@ class User {
       return error;
     }
   }
+
+  static async findById(_id) {
+    const db = getDbAccess();
+    try {
+      let result = await db.collection("users").findOne({ _id });
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async updateUserPassword(_id, password) {
+    const db = getDbAccess();
+    try {
+      let response = await db
+        .collection("users")
+        .updateOne({ _id }, { $set: { password } });
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 module.exports = User;

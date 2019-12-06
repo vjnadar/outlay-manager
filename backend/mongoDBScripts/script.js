@@ -74,3 +74,28 @@ db.createCollection("users",{
     }
   }
 });
+
+db.createCollection("resetPassword",{
+  validator:{
+    $jsonSchema:{
+      bsonType:"object",
+      description:"An object containing the reset password token.",
+      required:["_id","token","expirationTime"],
+      properties:{
+        _id:{
+          bsonType:"objectId",
+          description:"The user id.",
+        },
+        token:{
+          bsonType:"string",
+          description:"The user id.",
+        },
+        expirationTime:{
+          bsonType:"string",
+          description:"The expiration time of the token."
+        }
+      }
+
+    }
+  }
+})
