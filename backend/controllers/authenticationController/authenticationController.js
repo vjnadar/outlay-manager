@@ -85,7 +85,6 @@ exports.resetPasswordRequest = async (req, res, next) => {
         .add(1, "hours")
         .utc(true)
         .toISOString();
-      console.log(token);
       const resetPasswordRequest = new ResetPassword(
         user._id,
         token,
@@ -98,7 +97,7 @@ exports.resetPasswordRequest = async (req, res, next) => {
         from: "outlay-manager.com",
         subject: "Reset password",
         html: `<h2>Did you want to change your password?</h2>
-        <h4><a href="http://localhost:3000/editPassword/${token}">Follow this link to reset your password.</a></h4>
+        <h4><a href="http://localhost:3000/resetPassword/${token}">Follow this link to reset your password.</a></h4>
         `
       });
       catchError("emailWasNotSent", emailStatus);
@@ -116,8 +115,8 @@ exports.resetPassword = async (req, res, next) => {
   const token = req.body.token;
   try {
     const registeredToken = await ResetPassword.findBy(token, null);
-    const userId = ObjectId(registeredToken._id);
     catchError("isRegisteredToken", registeredToken);
+    const userId = ObjectId(registeredToken._id);
     if (
       registeredToken.expirationTime <
       moment()

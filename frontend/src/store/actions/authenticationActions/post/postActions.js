@@ -7,7 +7,7 @@ export const authenticationStart = () => {
     type: actionTypes.AUTHENTICATION_START
   };
 };
-export const signupPostCredentials = (credentials, resetForm, modalHandler) => {
+export const signupPostCredentials = (credentials, modalHandler) => {
   return dispatch => {
     dispatch(authenticationStart());
     axios
@@ -66,7 +66,7 @@ export const signupPostCredentialsFailed = error => {
   };
 };
 
-export const signinPostCredentials = (credentials, resetForm, modalHandler) => {
+export const signinPostCredentials = (credentials, modalHandler) => {
   return dispatch => {
     dispatch(authenticationStart());
     axios

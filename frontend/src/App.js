@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 
 // import Layout from "./components/Layout/Layout";
 import MainPage from "./views/MainPage/MainPage";
-import { AppContext } from "./contexts/contexts";
+import { AppContext, ResetPasswordContext } from "./contexts/contexts";
 import * as actions from "./store/actions/authenticationActions/logout/logoutActions";
+import * as resetPasswordActions from "./store/actions/authenticationActions/put/putActions";
 import * as OutlayComponents from "./views/index";
 
 class App extends Component {
@@ -25,29 +26,47 @@ class App extends Component {
   };
 
   render() {
-    const { token } = this.props;
+    const { token, resetPassword, resetPasswordRequest } = this.props;
     const { routeLock } = this.state;
     const appContext = {
       lockRoute: this.lockRoute,
       token
+    };
+    const resetPasswordContext = {
+      resetPassword,
+      resetPasswordRequest
     };
 
     let menus = null;
     if (!token) {
       menus = (
         <>
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={props => <OutlayComponents.Signin {...props} />}
-            />
-            <Route
-              path="/signup"
-              render={props => <OutlayComponents.Signup {...props} />}
-            />
-            <Redirect to="/" />
-          </Switch>
+          <ResetPasswordContext.Provider value={resetPasswordContext}>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={props => <OutlayComponents.Signin {...props} />}
+              />
+              <Route
+                path="/signup"
+                render={props => <OutlayComponents.Signup {...props} />}
+              />
+
+              <Route
+                path="/resetPasswordRequest"
+                render={props => (
+                  <OutlayComponents.ResetPasswordRequest {...props} />
+                )}
+              />
+              <Route
+                path="/resetPassword/:token"
+                render={props => <OutlayComponents.ResetPassword {...props} />}
+              />
+
+              <Redirect to="/" />
+            </Switch>
+          </ResetPasswordContext.Provider>
         </>
       );
     } else {
@@ -94,6 +113,14 @@ const mapDispatchToProps = dispatch => {
   return {
     automaticLogoutAction: () => {
       dispatch(actions.automaticLogout());
+    },
+    resetPasswordRequest: (body, modalHandler) => {
+      dispatch(resetPasswordActions.resetPasswordRequest(body, modalHandler));
+    },
+    resetPassword: (body, modalHandler, setResetSuccess) => {
+      dispatch(
+        resetPasswordActions.resetPassword(body, modalHandler, setResetSuccess)
+      );
     }
   };
 };

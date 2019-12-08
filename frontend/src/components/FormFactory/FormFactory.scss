@@ -94,9 +94,32 @@
   }
 }
 .buttonset {
-  margin-top: 0.9rem;
+  margin-top: 0.5rem;
 }
 .formErrors {
   color: white;
   font-weight: lighter;
+}
+.formLink {
+  &:link {
+    display: block;
+    text-decoration: none;
+    margin-top: 1rem;
+    width: 100%;
+    color: white;
+    font-size: 0.8rem;
+    margin-bottom: 2px;
+  }
+  &:focus {
+    text-decoration: none;
+    color: grey;
+  }
+  &:visited {
+    text-decoration: none;
+    // color: rgb(202, 202, 202);
+    color: white;
+  }
+  &:hover {
+    text-decoration: underline;
+  }
 }

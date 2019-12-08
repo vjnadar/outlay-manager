@@ -9,3 +9,4 @@ export {
   syncLogout,
   clearLogoutMessage
 } from "./logout/logoutActions";
+export { resetPasswordRequest, resetPassword } from "./put/putActions";

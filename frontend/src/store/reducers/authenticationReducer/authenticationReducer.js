@@ -66,6 +66,21 @@ export const authenticationReducer = (state = initialState, action) => {
         successData: null
       };
     }
+    case actionTypes.RESET_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        successData: action.successData,
+        loading: false,
+        error: null
+      };
+    }
+    case actionTypes.RESET_PASSWORD_FAILED: {
+      return {
+        ...state,
+        loading: false,
+        error: action.error
+      };
+    }
 
     default: {
       return state;

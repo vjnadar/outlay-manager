@@ -89,8 +89,8 @@ exports.catchError = (type, response) => {
     }
     case "isRegisteredToken": {
       if (!response) {
-        let error = new Error("The token is not registered");
-        error.statusCode = 400;
+        let error = new Error("The token is invalid!");
+        error.statusCode = 401;
         throw error;
       }
       break;

@@ -24,9 +24,9 @@ class Signup extends Component {
     });
   };
 
-  submit(credentials, resetForm) {
+  submit(credentials) {
     const { signupAction } = this.props;
-    signupAction(credentials, resetForm, this.modalHandler);
+    signupAction(credentials, this.modalHandler);
   }
 
   navigateToSignInPage = () => {
@@ -107,10 +107,8 @@ const mapStateToProp = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signupAction: (credentials, resetForm, modalHandler) => {
-      dispatch(
-        actions.signupPostCredentials(credentials, resetForm, modalHandler)
-      );
+    signupAction: (credentials, modalHandler) => {
+      dispatch(actions.signupPostCredentials(credentials, modalHandler));
     }
   };
 };
