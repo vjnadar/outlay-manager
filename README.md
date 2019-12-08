@@ -14,7 +14,7 @@ A Full Stack Web Application that uses **React JS, Redux JS**, **Node JS/Express
 - It uses **JSON web token (JWT)** for authentication.
 
 <p align="center">
-  <img src="https://i.imgur.com/qkxqnOa.jpg" width="100%" height="100%">
+  <img src="https://imgur.com/opChnaI.jpg" width="100%" height="100%">
 </p>
 
 ## Frontend
