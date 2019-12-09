@@ -4,7 +4,7 @@ const MongoClient = mongoDb.MongoClient;
 let _db;
 let _client;
 const connectToDb = listenCallBack => {
-  MongoClient.connect(process.env.HOST, { useUnifiedTopology: true })
+  MongoClient.connect(process.env.MONGO_HOST, { useUnifiedTopology: true })
     .then(client => {
       console.log("Connected!");
       _client = client;

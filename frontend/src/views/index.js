@@ -8,3 +8,9 @@ export const EditPage = React.lazy(() => import("../views/EditPage/EditPage"));
 export const StatsPage = React.lazy(() =>
   import("../views/StatsPage/StatsPage")
 );
+export const ResetPasswordRequest = React.lazy(() =>
+  import("../views/ResetPasswordRequest/ResetPasswordRequest")
+);
+export const ResetPassword = React.lazy(() =>
+  import("../views/ResetPassword/ResetPassword")
+);

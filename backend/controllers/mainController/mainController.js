@@ -83,7 +83,7 @@ exports.postDateData = async (req, res, next) => {
   const newEntry = new Entry(null, userId, flowtype, type, amount, date, time);
   try {
     let result = await newEntry.save();
-    catchError("insertOne", result);
+    catchError({ type: "insertOne" }, result);
     res.status(201).json({
       message: "The date entry was posted successfully",
       _id: result.insertedId
@@ -114,7 +114,7 @@ exports.updateEntry = async (req, res, next) => {
   );
   try {
     let result = await newEntryToBeSaved.save();
-    catchError("updateOne", result);
+    catchError({ type: "updateOne" }, result);
     res.status(200).json({ message: "The entry was updated successfully" });
   } catch (error) {
     next(error);
@@ -127,7 +127,7 @@ exports.deleteEntry = async (req, res, next) => {
   const userId = ObjectId(req.userId);
   try {
     let result = await Entry.deleteById(id, userId);
-    catchError("deleteOne", result);
+    catchError({ type: "deleteOne" }, result);
     res.status(200).json({ message: "The entry was deleted successfully!" });
   } catch (error) {
     next(error);

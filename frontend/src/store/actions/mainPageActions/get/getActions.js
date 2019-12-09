@@ -25,7 +25,6 @@ export const getAll = date => {
               getTotalRes.data.result
             )
           );
-          localStorage.setItem("date", date.toISOString());
         })
       )
       .catch(error => {

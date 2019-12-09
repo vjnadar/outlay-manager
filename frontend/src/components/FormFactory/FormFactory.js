@@ -32,7 +32,7 @@ class FormFactory extends PureComponent {
   }
 
   setValidationSchema = validation => {
-    switch (validation.type) {
+    switch (validation && validation.type) {
       case "email": {
         return Yup.string()
           .email(validation.invalidEmailMessage)
@@ -47,6 +47,14 @@ class FormFactory extends PureComponent {
       case "password": {
         return Yup.string()
           .min(validation.min, validation.minPasswordLenMessage)
+          .required(validation.requiredMessage);
+      }
+      case "confirmpassword": {
+        return Yup.string()
+          .oneOf(
+            [Yup.ref(validation.secondField), null],
+            "The passwords dont match."
+          )
           .required(validation.requiredMessage);
       }
       default: {
@@ -69,7 +77,7 @@ class FormFactory extends PureComponent {
               initialValues={initialValues}
               onSubmit={(values, actions) => {
                 actions.validateForm(values).then(() => {
-                  submit(values, actions.resetForm);
+                  submit(values);
                 });
               }}
               validationSchema={validationSchema}

@@ -23,6 +23,12 @@ export const signinFormSpecs = {
         requiredMessage: "This field is required and must be filled.",
         min: 4
       }
+    },
+    {
+      type: "link",
+      name: "link",
+      label: "Forgot your password? Click here.",
+      to: "/resetPasswordRequest"
     }
   ],
   buttons: {

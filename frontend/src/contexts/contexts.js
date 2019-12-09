@@ -10,3 +10,7 @@ export const MainPageContext = React.createContext({
 });
 
 export const AppContext = React.createContext({ lockRoute: {}, token: "" });
+export const ResetPasswordContext = React.createContext({
+  resetPasswordRequest: () => {},
+  resetPassword: () => {}
+});

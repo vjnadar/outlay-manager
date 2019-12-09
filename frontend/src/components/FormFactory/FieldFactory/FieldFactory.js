@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const fieldFactory = props => {
   return (
@@ -54,6 +55,12 @@ const fieldFactory = props => {
           ) : field.type === "formtext" ? (
             <React.Fragment>
               <small>{field.text}</small>
+            </React.Fragment>
+          ) : field.type === "link" ? (
+            <React.Fragment>
+              <Link to={field.to} className="formLink">
+                {field.label}
+              </Link>
             </React.Fragment>
           ) : (
             <React.Fragment>
