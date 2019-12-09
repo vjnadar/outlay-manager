@@ -64,7 +64,8 @@ exports.checkAuthentication = async (req, res, next) => {
     {
       type: "generalError",
       message: "The user is not logged in!",
-      statusCode: 401
+      statusCode: 401,
+      next
     },
     token
   );
