@@ -48,6 +48,7 @@ A Full Stack Web Application that uses **React JS, Redux JS**, **Node JS/Express
 5. RESTful API 
 6. JWT Authentication
 7. Bcrypt JS(password encryption)
+8. Nodemailer (email sender)
 ## General Requirements
 
 - NPM
