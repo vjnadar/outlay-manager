@@ -27,12 +27,26 @@ exports.signup = async (req, res, next) => {
   const password = req.body.password;
   try {
     let user = await User.findByEmail(email);
-    catchError("accountAvailability", user);
+    catchError(
+      {
+        type: "generalErrorInverse",
+        message: "The user account already exists",
+        statusCode: 400
+      },
+      user
+    );
     const hashedPassword = await bcrypt.hash(password, 12);
-    catchError("hashPassword", hashedPassword);
+    catchError(
+      {
+        type: "generalError",
+        message: "The hash process failed",
+        statusCode: 500
+      },
+      hashedPassword
+    );
     const newUser = new User(null, fullName, email, hashedPassword);
     let response = await newUser.save();
-    catchError("insertOne", response);
+    catchError({ type: "insertOne" }, response);
     res.status(201).json({ message: "The account was created successfully!" });
     const sendEmailSuccess = await transporter.sendMail({
       to: email,
@@ -52,9 +66,23 @@ exports.signin = async (req, res, next) => {
   const password = req.body.password;
   try {
     let user = await User.findByEmail(email);
-    catchError("userNotRegistered", user);
+    catchError(
+      {
+        type: "generalError",
+        message: "This user does not have an account and should register!",
+        statusCode: 401
+      },
+      user
+    );
     let isPasswordValid = await bcrypt.compare(password, user.password);
-    catchError("isPasswordValid", isPasswordValid);
+    catchError(
+      {
+        type: "generalError",
+        message: "The entered password is invalid!",
+        statusCode: 401
+      },
+      isPasswordValid
+    );
     let token = jwt.sign({ user_id: user._id.toString() }, process.env.SALT, {
       expiresIn: "1h"
     });
@@ -73,7 +101,14 @@ exports.resetPasswordRequest = async (req, res, next) => {
   const email = req.body.email;
   try {
     const user = await User.findByEmail(email);
-    catchError("userNotRegistered", user);
+    catchError(
+      {
+        type: "generalError",
+        message: "This user does not have an account and should register!",
+        statusCode: 401
+      },
+      user
+    );
     const oldTokenExists = await ResetPassword.findBy(null, user._id);
     if (oldTokenExists) {
       res.status(200).json({
@@ -91,16 +126,26 @@ exports.resetPasswordRequest = async (req, res, next) => {
         expirationTime
       );
       let saveResponse = await resetPasswordRequest.save();
-      catchError("insertOne", saveResponse);
+      catchError({ type: "insertOne" }, saveResponse);
       const emailStatus = await transporter.sendMail({
         to: email,
         from: "outlay-manager.com",
         subject: "Reset password",
-        html: `<h2>Did you want to change your password?</h2>
-        <h4><a href="http://localhost:3000/resetPassword/${token}">Follow this link to reset your password.</a></h4>
+        html: `<title>Did you want to change your password?</title><body>
+        <p>Hi. If you want to change your password follow the link below.</p>
+        <p><a href="${process.env.FRONT_END_HOST}/resetPassword/${token}">Follow this link to reset your password.</a></p></body>
+        <p>Cheers,</p>
+        <p>Outlay Manager Team</p>
         `
       });
-      catchError("emailWasNotSent", emailStatus);
+      catchError(
+        {
+          type: "generalError",
+          message: "The email was not sent!",
+          statusCode: 400
+        },
+        emailStatus
+      );
       res.json({
         message: "We sent you a mail. Please check your email account!"
       });
@@ -115,7 +160,14 @@ exports.resetPassword = async (req, res, next) => {
   const token = req.body.token;
   try {
     const registeredToken = await ResetPassword.findBy(token, null);
-    catchError("isRegisteredToken", registeredToken);
+    catchError(
+      {
+        type: "generalError",
+        message: "The token is invalid!",
+        statusCode: 401
+      },
+      registeredToken
+    );
     const userId = ObjectId(registeredToken._id);
     if (
       registeredToken.expirationTime <
@@ -125,19 +177,33 @@ exports.resetPassword = async (req, res, next) => {
     ) {
       res.status(401).json({ message: "The token expired!" });
       let deleteResponse = await ResetPassword.deleteById(registeredToken._id);
-      catchError("deleteOne", deleteResponse);
+      catchError({ type: "deleteOne" }, deleteResponse);
     } else {
       const user = await User.findById(userId);
-      catchError("userNotRegistered", user);
+      catchError(
+        {
+          type: "generalError",
+          message: "This user does not have an account and should register!",
+          statusCode: 401
+        },
+        user
+      );
       let hashedPassword = await bcrypt.hash(password, 12);
-      catchError("hashPassword", hashedPassword);
+      catchError(
+        {
+          type: "generalError",
+          message: "The hash process failed",
+          statusCode: 500
+        },
+        hashedPassword
+      );
       let updateResponse = await User.updateUserPassword(
         userId,
         hashedPassword
       );
-      catchError("updateOne", updateResponse);
+      catchError({ type: "updateOne" }, updateResponse);
       let deleteResponse = await ResetPassword.deleteById(userId);
-      catchError("deleteOne", deleteResponse);
+      catchError({ type: "deleteOne" }, deleteResponse);
       res.status(200).json({ message: "The password was reset successfully!" });
     }
   } catch (error) {

@@ -1,10 +1,26 @@
-exports.catchError = (type, response) => {
-  switch (type) {
-    case "commonOp": {
+exports.catchError = (errorHolder, response) => {
+  switch (errorHolder.type) {
+    case "generalError": {
       if (!response) {
-        let error = new Error("The operation failed! Not found");
-        error.statusCode = 404;
-        throw error;
+        let error = new Error(errorHolder.message);
+        error.statusCode = errorHolder.statusCode;
+        if (errorHolder.next) {
+          errorHolder.next(error);
+        } else {
+          throw error;
+        }
+      }
+      break;
+    }
+    case "generalErrorInverse": {
+      if (response) {
+        let error = new Error(errorHolder.message);
+        error.statusCode = errorHolder.statusCode;
+        if (errorHolder.next) {
+          errorHolder.next(error);
+        } else {
+          throw error;
+        }
       }
       break;
     }
@@ -41,56 +57,6 @@ exports.catchError = (type, response) => {
         throw error;
       } else if (response.name === "MongoError") {
         let error = new Error("MongoDb error. Check database");
-        throw error;
-      }
-      break;
-    }
-    case "accountAvailability": {
-      if (response) {
-        let error = new Error("The user account already exists");
-        error.statusCode = 400;
-        throw error;
-      }
-      break;
-    }
-    case "hashPassword": {
-      if (!response) {
-        let error = new Error("The hash process failed");
-        error.statusCode = 400;
-        throw error;
-      }
-      break;
-    }
-    case "userNotRegistered": {
-      if (!response) {
-        let error = new Error(
-          "This user does not have an account and should register!"
-        );
-        error.statusCode = 401;
-        throw error;
-      }
-      break;
-    }
-    case "isPasswordValid": {
-      if (!response) {
-        let error = new Error("The entered password is invalid!");
-        error.statusCode = 401;
-        throw error;
-      }
-      break;
-    }
-    case "emailWasNotSent": {
-      if (!response) {
-        let error = new Error("The email was not sent!");
-        error.statusCode = 400;
-        throw error;
-      }
-      break;
-    }
-    case "isRegisteredToken": {
-      if (!response) {
-        let error = new Error("The token is invalid!");
-        error.statusCode = 401;
         throw error;
       }
       break;

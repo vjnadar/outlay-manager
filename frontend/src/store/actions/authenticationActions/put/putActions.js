@@ -35,6 +35,14 @@ export const resetPasswordRequest = (body, modalHandler) => {
               "This user does not have an account and should register!"
             );
             break;
+          case "The email value was not present.":
+            errorData = {
+              type: "formError",
+              message: "The request did not have all the values.",
+              statusCode: 400
+            };
+            modalHandler("Enter your email!");
+            break;
           default:
             errorData = { type: "serverError", error };
             modalHandler("Something went wrong. Try again later!");
@@ -53,7 +61,7 @@ export const resetPassword = (body, modalHandler, setResetSuccess) => {
       .then(res => {
         setResetSuccess(true);
         modalHandler(
-          "The password was reset successfully. Login with your new password."
+          "Your password was changed successfully. Login with your new password."
         );
         dispatch(resetPasswordSuccess(res.data));
       })
@@ -90,6 +98,16 @@ export const resetPassword = (body, modalHandler, setResetSuccess) => {
             };
             modalHandler(
               "This user does not have an account and should register!"
+            );
+            break;
+          case "Request failed. Request did not have all the values necessary for this endpoint!":
+            errorData = {
+              type: "formError",
+              message: "The request did not have all the values.",
+              statusCode: 400
+            };
+            modalHandler(
+              "Request did not have all the values necessary for this endpoint!"
             );
             break;
           default:

@@ -18,9 +18,14 @@ router.post(
 
 router.put(
   "/resetPasswordRequest",
+  authentication.checkResetPasswordRequest,
   authenticationController.resetPasswordRequest
 );
 
-router.put("/resetPassword", authenticationController.resetPassword);
+router.put(
+  "/resetPassword",
+  authentication.checkResetPassword,
+  authenticationController.resetPassword
+);
 
 module.exports = router;
