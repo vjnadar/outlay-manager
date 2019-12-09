@@ -52,9 +52,8 @@ exports.signup = async (req, res, next) => {
       to: email,
       from: "outlay-manager.com",
       subject: "Your registration was successful. Welcome!",
-      html: "<h1>Registration was successful!</h1>",
-      body:
-        "<h4>Welcome to Outlay Manager. Just sign in with your new credentials now. We hope that you will find our application useful!</h4>"
+      html: `<h1>Registration was successful!</h1>
+      <h4>Welcome to Outlay Manager. Just sign in with your new credentials now. We hope that you will find our application useful!</h4>`
     });
   } catch (error) {
     next(error);
