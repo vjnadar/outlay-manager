@@ -5,9 +5,9 @@ import "./Footer.scss";
 const Footer = props => {
   return (
     <>
-      <footer>
+      <footer className="footer">
         <p>
-          <small className="footer">
+          <small >
             © {new Date().getFullYear()}
             <a href="https://github.com/vjnadar"> Korkai Software,</a> All
             Rights Reserved.
