@@ -8,9 +8,7 @@ const SetTokenHeader = (WrappedComponent, axios) => {
       this.state = {
         interceptor: axios.interceptors.request.use(
           config => {
-            console.log("Mount");
             config.headers.Authorization = `Bearer ${this.context.token}`;
-            console.log(config);
             return config;
           }
           // error=> {
