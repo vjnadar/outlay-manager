@@ -1,6 +1,6 @@
 <div align="center">
     <h1 align="center">Outlay Manager</h1>
-    <span align="center"><a href="https://eager-kalam-5e53c6.netlify.app">Live preview </a><a href="mailto:vjn8490@gmail.com">Contact me</a></span>
+    <span align="center"><a href="https://eager-kalam-5e53c6.netlify.app">Live preview|</a><a href="mailto:vjn8490@gmail.com">Contact me</a></span>
 </div>
 <br/>
 A Full Stack Web Application that uses **React JS, Redux JS**, **Node JS/Express JS**, **RESTful API** and **MongoDB.**
