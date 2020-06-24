@@ -5,7 +5,6 @@ let _client;
 
 const connectToDb = listenCallBack => {
   const url=process.env.NODE_ENV==="DEV"?process.env.MONGO_HOST_DEV:process.env.MONGO_HOST_PROD;
-  console.log(url);
   MongoClient.connect(url, { useUnifiedTopology: true })
     .then(client => {
       console.log("Connected!");
