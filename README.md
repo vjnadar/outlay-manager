@@ -1,5 +1,5 @@
 <div align="center">
-    <h1 align="center"><b>Outlay Manager</b></h1>
+    <h3 align="center"><b>Outlay Manager</b></h3>
     <span align="center"><a href="https://eager-kalam-5e53c6.netlify.app"><b>Live preview </b></a>|<a href="mailto:vjn8490@gmail.com"><b> Contact me</b></a></span>
     <br/>
 </div>
