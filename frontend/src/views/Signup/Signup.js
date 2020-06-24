@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Col, Button } from "reactstrap";
+import { Button } from "reactstrap";
 import * as actions from "../../store/actions/authenticationActions/index";
 import Form from "../../components/FormFactory/FormFactory";
 import { signupFormSpecs } from "./signupFormSpecs";
@@ -15,11 +15,11 @@ class Signup extends Component {
     this.submit = this.submit.bind(this);
   }
 
-  modalHandler = message => {
-    this.setState(prevState => {
+  modalHandler = (message) => {
+    this.setState((prevState) => {
       return {
         modal: !prevState.modal,
-        modalMessage: prevState.modalMessage === "" ? message : ""
+        modalMessage: prevState.modalMessage === "" ? message : "",
       };
     });
   };
@@ -29,8 +29,12 @@ class Signup extends Component {
     signupAction(credentials, this.modalHandler);
   }
 
-  navigateToSignInPage = () => {
-    this.props.history.push("/");
+  navigateTo = (event) => {
+    if (event.target.name === "signin") {
+      this.props.history.push("/");
+    } else {
+      window.location.reload();
+    }
   };
 
   render() {
@@ -41,10 +45,13 @@ class Signup extends Component {
       <>
         <small className="smallText">Already have an account? Sign in.</small>
         <Button
+          name="signin"
           color="success"
           type="button"
           className="signinNav"
-          onClick={this.navigateToSignInPage}
+          onClick={(event) => {
+            this.navigateTo(event);
+          }}
         >
           Signin
         </Button>
@@ -53,10 +60,28 @@ class Signup extends Component {
     const errorModal = (
       <>
         <Modal header="Alert!" modal={modal} modalHandler={this.modalHandler}>
-          <p>{modalMessage}</p>
-          <Button onClick={this.modalHandler} outline color="info">
-            OK
-          </Button>
+          {error && error.type === "serverError" ? (
+            <>
+              <p>Sorry. Something went wrong. Please try again later.</p>
+              <Button
+                name="goBack"
+                onClick={(event) => {
+                  this.navigateTo(event);
+                }}
+                outline
+                color="info"
+              >
+                Go back
+              </Button>
+            </>
+          ) : (
+            <>
+              <p>{modalMessage}</p>
+              <Button onClick={this.modalHandler} outline color="info">
+                OK
+              </Button>
+            </>
+          )}
         </Modal>
       </>
     );
@@ -79,15 +104,7 @@ class Signup extends Component {
       );
     }
     if (error && error.type === "serverError") {
-      content = (
-        <>
-          <Row>
-            <Col>
-              <b>Sorry. Something went wrong. Please try again later.</b>
-            </Col>
-          </Row>
-        </>
-      );
+      content = <></>;
     }
     return (
       <>
@@ -98,18 +115,18 @@ class Signup extends Component {
   }
 }
 
-const mapStateToProp = state => {
+const mapStateToProp = (state) => {
   return {
     loading: state.authenticationReducer.loading,
-    error: state.authenticationReducer.error
+    error: state.authenticationReducer.error,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     signupAction: (credentials, modalHandler) => {
       dispatch(actions.signupPostCredentials(credentials, modalHandler));
-    }
+    },
   };
 };
 

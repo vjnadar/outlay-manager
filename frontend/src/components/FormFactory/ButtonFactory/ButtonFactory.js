@@ -52,7 +52,6 @@ class ButtonFactory extends Component {
       }
       default: {
         button = <></>;
-        console.log("Invalid form");
         break;
       }
     }

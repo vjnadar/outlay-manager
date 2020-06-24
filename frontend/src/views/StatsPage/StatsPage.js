@@ -30,18 +30,6 @@ class StatsPage extends Component {
     // this.formHandler = this.formHandler.bind(this);
   }
 
-  componentDidMount() {
-    const { getStatsAction } = this.props;
-    const { startDate, endDate } = this.state;
-    const body = {
-      startDate,
-      endDate
-    };
-    if (startDate && endDate) {
-      getStatsAction(body, this.statsPageMethods.setSingleFlowtype);
-    }
-  }
-
   render() {
     const {
       startDate,

@@ -32,8 +32,7 @@ const Table = props => {
     setPage(0);
   }, [props.entryFromDate]);
 
-  const handleChangePage = useCallback((event, newPage) => {
-    console.log(event);
+  const handleChangePage = useCallback((_=undefined, newPage) => {
     setPage(newPage);
   }, []);
 

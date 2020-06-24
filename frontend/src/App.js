@@ -3,17 +3,18 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 // import Layout from "./components/Layout/Layout";
-import MainPage from "./views/MainPage/MainPage";
 import { AppContext, ResetPasswordContext } from "./contexts/contexts";
 import * as actions from "./store/actions/authenticationActions/logout/logoutActions";
+import Spinner from "./components/UI/Spinner/Spinner";
 import * as resetPasswordActions from "./store/actions/authenticationActions/put/putActions";
+import Layout from "./components/Layout/Layout";
 import * as OutlayComponents from "./views/index";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      routeLock: true
+      routeLock: true,
     };
   }
   componentDidMount() {
@@ -21,20 +22,22 @@ class App extends Component {
     automaticLogoutAction();
   }
 
-  lockRoute = booleanVal => {
+  lockRoute = (booleanVal) => {
     this.setState({ routeLock: booleanVal });
   };
 
   render() {
-    const { token, resetPassword, resetPasswordRequest } = this.props;
+    const { token, resetPassword, resetPasswordRequest,loading,error } = this.props;
     const { routeLock } = this.state;
     const appContext = {
       lockRoute: this.lockRoute,
-      token
+      token,
     };
     const resetPasswordContext = {
       resetPassword,
-      resetPasswordRequest
+      resetPasswordRequest,
+      loading,
+      error
     };
 
     let menus = null;
@@ -46,22 +49,24 @@ class App extends Component {
               <Route
                 exact
                 path="/"
-                render={props => <OutlayComponents.Signin {...props} />}
+                render={(props) => <OutlayComponents.Signin {...props} />}
               />
               <Route
                 path="/signup"
-                render={props => <OutlayComponents.Signup {...props} />}
+                render={(props) => <OutlayComponents.Signup {...props} />}
               />
 
               <Route
                 path="/resetPasswordRequest"
-                render={props => (
+                render={(props) => (
                   <OutlayComponents.ResetPasswordRequest {...props} />
                 )}
               />
               <Route
                 path="/resetPassword/:token"
-                render={props => <OutlayComponents.ResetPassword {...props} />}
+                render={(props) => (
+                  <OutlayComponents.ResetPassword {...props} />
+                )}
               />
 
               <Redirect to="/" />
@@ -76,17 +81,17 @@ class App extends Component {
             <Route
               exact
               path="/mainPage"
-              render={props => <MainPage {...props} />}
+              render={(props) => <OutlayComponents.MainPage {...props} />}
             />
             {!routeLock ? (
               <Route
                 path={"/editPage"}
-                render={props => <OutlayComponents.EditPage {...props} />}
+                render={(props) => <OutlayComponents.EditPage {...props} />}
               />
             ) : null}
             <Route
               path="/statsPage"
-              render={props => <OutlayComponents.StatsPage {...props} />}
+              render={(props) => <OutlayComponents.StatsPage {...props} />}
             />
             <Redirect to="/mainPage" />
           </Switch>
@@ -94,22 +99,30 @@ class App extends Component {
       );
     }
     return (
-      <Suspense fallback={<></>}>
-        <div className="app">
-          <AppContext.Provider value={appContext}>
-            <OutlayComponents.Layout>{menus}</OutlayComponents.Layout>
-          </AppContext.Provider>
-        </div>
-      </Suspense>
+      <AppContext.Provider value={appContext}>
+        <Layout>
+          <Suspense
+            fallback={
+              <>
+                <Spinner />
+              </>
+            }
+          >
+            <div className="app">{menus}</div>
+          </Suspense>
+        </Layout>
+      </AppContext.Provider>
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    token: state.authenticationReducer.token
+    token: state.authenticationReducer.token,
+    loading:state.authenticationReducer.loading,
+    error:state.authenticationReducer.error
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     automaticLogoutAction: () => {
       dispatch(actions.automaticLogout());
@@ -121,7 +134,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         resetPasswordActions.resetPassword(body, modalHandler, setResetSuccess)
       );
-    }
+    },
   };
 };
 

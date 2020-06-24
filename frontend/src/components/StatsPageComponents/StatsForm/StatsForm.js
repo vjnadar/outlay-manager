@@ -1,9 +1,9 @@
 import React from "react";
 import { Form, FormGroup, Label, Input, Row, Col, Button } from "reactstrap";
-
+import 'react-dates/initialize';
 import DateRangePicker from "../../DatePicker/DateRangePicker";
 
-const StatsForm = props => {
+const StatsForm = React.memo(props => {
   return (
     <>
       &nbsp;
@@ -110,6 +110,6 @@ const StatsForm = props => {
       </Form>
     </>
   );
-};
+});
 
 export default StatsForm;

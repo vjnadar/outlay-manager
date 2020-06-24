@@ -3,30 +3,36 @@ import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
 import FormFactory from "../../components/FormFactory/FormFactory";
+import Spinner from "../../components/UI/Spinner/Spinner";
 import { resetPasswordRequestFormSpecs } from "./resetPasswordRequestFormSpecs";
 import { ResetPasswordContext } from "../../contexts/contexts";
 import Modal from "../../components/UI/Modal/Modal";
 
-const ResetPasswordRequest = props => {
-  const resetPasswordContext = useContext(ResetPasswordContext);
+const ResetPasswordRequest = (props) => {
+  const { resetPasswordRequest, loading, error } = useContext(
+    ResetPasswordContext
+  );
   const [modal, setModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const modalHandler = useCallback(
-    message => {
-      setModal(prevModalValue => {
+    (message) => {
+      setModal((prevModalValue) => {
         return !prevModalValue;
       });
-      setModalMessage(prevModalMessage => {
+      setModalMessage((prevModalMessage) => {
         return prevModalMessage === "" ? message : "";
       });
     },
     [modal, modalMessage]
   );
-  const submit = useCallback(values => {
+  const navigateTo = useCallback(() => {
+    window.location.reload();
+  });
+  const submit = useCallback((values) => {
     const body = {
-      email: values.email
+      email: values.email,
     };
-    resetPasswordContext.resetPasswordRequest(body, modalHandler);
+    resetPasswordRequest(body, modalHandler);
   }, []);
   const afterForm = (
     <>
@@ -35,24 +41,44 @@ const ResetPasswordRequest = props => {
       </Button>
     </>
   );
-  const errorModal = (
+  const messageModal = (
     <>
-      <Modal header="Alert!" modal={modal} modalHandler={modalHandler}>
-        <p>{modalMessage}</p>
-        <Button onClick={modalHandler} outline color="info">
-          OK
-        </Button>
+      <Modal
+        header="Alert!"
+        modal={modal}
+        modalHandler={modalHandler}
+        backdrop={error && error.type === "serverError" ? "static" : false}
+      >
+        {error && error.type === "serverError" ? (
+          <>
+            <p>Sorry. Something went wrong. Please try again later.</p>
+            <Button name="goBack" onClick={navigateTo} outline color="info">
+              Try Again
+            </Button>
+          </>
+        ) : (
+          <>
+            <p>{modalMessage}</p>
+            <Button onClick={modalHandler} outline color="info">
+              OK
+            </Button>
+          </>
+        )}
       </Modal>
     </>
   );
   return (
     <>
-      {errorModal}
-      <FormFactory
-        formSpecs={resetPasswordRequestFormSpecs}
-        submit={submit}
-        afterForm={afterForm}
-      />
+      {messageModal}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <FormFactory
+          formSpecs={resetPasswordRequestFormSpecs}
+          submit={submit}
+          afterForm={afterForm}
+        />
+      )}
     </>
   );
 };
