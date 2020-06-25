@@ -16,6 +16,7 @@ export const editPageReducer = (state = initialState, action) => {
     case actionTypes.UPDATE_DATE_ENTRY_SUCCESS: {
       return {
         ...state,
+        loading: false,
         successData: action.updateSuccessData
       };
     }

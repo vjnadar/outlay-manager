@@ -2,9 +2,11 @@ import React from "react";
 import { DateRangePicker as ReactDateRangePicker } from "react-dates";
 
 const DateRangePicker = props => {
+  console.log(props)
   return (
     <>
       <ReactDateRangePicker
+        openDirection={props.dataAvailable?"up":"down"}
         startDate={props.startDate} // momentPropTypes.momentObj or null,
         startDateId="From" // PropTypes.string.isRequired,
         endDate={props.endDate} // momentPropTypes.momentObj or null,

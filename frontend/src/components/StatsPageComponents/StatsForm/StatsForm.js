@@ -78,6 +78,7 @@ const StatsForm = React.memo(props => {
                 <b>Choose a date range</b>
               </p>
               <DateRangePicker
+                dataAvailable={props.income.length || props.expense.length}
                 id="daterange"
                 dateChangeHandler={props.dateChangeHandler}
                 focusChangeHandler={props.focusChangeHandler}
