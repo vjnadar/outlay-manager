@@ -2,7 +2,6 @@ import React from "react";
 import { DateRangePicker as ReactDateRangePicker } from "react-dates";
 
 const DateRangePicker = props => {
-  console.log(props)
   return (
     <>
       <ReactDateRangePicker
