@@ -16,8 +16,8 @@ require("dotenv").config();
 const transporter = nodemailer.createTransport(
   sendGridTransporter({
     auth: {
-      api_key: process.env.SEND_GRID_KEY
-    }
+      api_key: process.env.SEND_GRID_KEY,
+    },
   })
 );
 
@@ -31,7 +31,7 @@ exports.signup = async (req, res, next) => {
       {
         type: "generalErrorInverse",
         message: "The user account already exists",
-        statusCode: 400
+        statusCode: 400,
       },
       user
     );
@@ -40,7 +40,7 @@ exports.signup = async (req, res, next) => {
       {
         type: "generalError",
         message: "The hash process failed",
-        statusCode: 500
+        statusCode: 500,
       },
       hashedPassword
     );
@@ -53,7 +53,7 @@ exports.signup = async (req, res, next) => {
       from: "outlay-manager.com",
       subject: "Your registration was successful. Welcome!",
       html: `<h1>Registration was successful!</h1>
-      <h4>Welcome to Outlay Manager. Just sign in with your new credentials now. We hope that you will find our application useful!</h4>`
+      <h4>Welcome to Outlay Manager. Just sign in with your new credentials now. We hope that you will find our application useful!</h4>`,
     });
   } catch (error) {
     next(error);
@@ -69,7 +69,7 @@ exports.signin = async (req, res, next) => {
       {
         type: "generalError",
         message: "This user does not have an account and should register!",
-        statusCode: 401
+        statusCode: 401,
       },
       user
     );
@@ -78,18 +78,18 @@ exports.signin = async (req, res, next) => {
       {
         type: "generalError",
         message: "The entered password is invalid!",
-        statusCode: 401
+        statusCode: 401,
       },
       isPasswordValid
     );
     let token = jwt.sign({ user_id: user._id.toString() }, process.env.SALT, {
-      expiresIn: "1h"
+      expiresIn: "1h",
     });
     res.status(200).json({
       message: "Login was sucessful!",
       token,
       user_id: user._id,
-      expirationTime: 3601
+      expirationTime: 3601,
     });
   } catch (error) {
     next(error);
@@ -104,21 +104,22 @@ exports.resetPasswordRequest = async (req, res, next) => {
       {
         type: "generalError",
         message: "This user does not have an account and should register!",
-        statusCode: 401
+        statusCode: 401,
       },
       user
     );
     const oldTokenExists = await ResetPassword.findBy(null, user._id);
-    if (oldTokenExists) {
-      res.status(200).json({
-        message: "A mail was already sent! Please check your email account!"
-      });
-    } else {
+    catchError(
+      {
+        type: "generalErrorInverse",
+        message: "A mail was already sent! Please check your email account!",
+        statusCode: 401,
+      },
+      oldTokenExists
+    );
+    if (!oldTokenExists) {
       const token = await utilities.cryptoAsync(32);
-      const expirationTime = moment()
-        .add(1, "hours")
-        .utc(true)
-        .toISOString();
+      const expirationTime = moment().add(1, "hours").utc(true).toISOString();
       const resetPasswordRequest = new ResetPassword(
         user._id,
         token,
@@ -135,18 +136,18 @@ exports.resetPasswordRequest = async (req, res, next) => {
         <p><a href="${process.env.FRONT_END_HOST}/resetPassword/${token}">Follow this link to reset your password.</a></p></body>
         <p>Cheers,</p>
         <p>Outlay Manager Team</p>
-        `
+        `,
       });
       catchError(
         {
           type: "generalError",
           message: "The email was not sent!",
-          statusCode: 400
+          statusCode: 400,
         },
         emailStatus
       );
       res.json({
-        message: "We sent you a mail. Please check your email account!"
+        message: "We sent you a mail. Please check your email account!",
       });
     }
   } catch (error) {
@@ -163,17 +164,12 @@ exports.resetPassword = async (req, res, next) => {
       {
         type: "generalError",
         message: "The token is invalid!",
-        statusCode: 401
+        statusCode: 401,
       },
       registeredToken
     );
     const userId = ObjectId(registeredToken._id);
-    if (
-      registeredToken.expirationTime <
-      moment()
-        .utc(true)
-        .toISOString()
-    ) {
+    if (registeredToken.expirationTime < moment().utc(true).toISOString()) {
       res.status(401).json({ message: "The token expired!" });
       let deleteResponse = await ResetPassword.deleteById(registeredToken._id);
       catchError({ type: "deleteOne" }, deleteResponse);
@@ -183,7 +179,7 @@ exports.resetPassword = async (req, res, next) => {
         {
           type: "generalError",
           message: "This user does not have an account and should register!",
-          statusCode: 401
+          statusCode: 401,
         },
         user
       );
@@ -192,7 +188,7 @@ exports.resetPassword = async (req, res, next) => {
         {
           type: "generalError",
           message: "The hash process failed",
-          statusCode: 500
+          statusCode: 500,
         },
         hashedPassword
       );
