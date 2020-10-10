@@ -125,11 +125,9 @@ exports.resetPasswordRequest = async (req, res, next) => {
         token,
         expirationTime
       );
-      let saveResponse = await resetPasswordRequest.save();
-      catchError({ type: "insertOne" }, saveResponse);
       const emailStatus = await transporter.sendMail({
         to: email,
-        from: "outlay-manager.com",
+        from: ["alert@outlaymanager.com"],
         subject: "Reset password",
         html: `<title>Did you want to change your password?</title><body>
         <p>Hi. If you want to change your password follow the link below.</p>
@@ -146,6 +144,8 @@ exports.resetPasswordRequest = async (req, res, next) => {
         },
         emailStatus
       );
+      let saveResponse = await resetPasswordRequest.save();
+      catchError({ type: "insertOne" }, saveResponse);
       res.json({
         message: "We sent you a mail. Please check your email account!",
       });

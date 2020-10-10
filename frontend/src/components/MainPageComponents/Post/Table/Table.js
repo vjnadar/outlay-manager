@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useContext, useEffect } from "react";
+import React, {
+  useState,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { Table as ReactstrapTable, Button } from "reactstrap";
 
 import DeletePopup from "./DeletePopup/DeletePopup";
@@ -7,7 +13,8 @@ import Pagination from "../../Pagination/Pagination";
 
 import "./Table.scss";
 
-const Table = props => {
+const Table = (props) => {
+  const mounted = useRef();
   const [modal, setModal] = useState(false);
   const [_id, set_Id] = useState("");
   const [page, setPage] = useState(0);
@@ -16,12 +23,11 @@ const Table = props => {
   const [entryArray, setEntryArray] = useState([]);
   const mainPageContext = useContext(MainPageContext);
   const appContext = useContext(AppContext);
-  let mounted = false;
 
   useEffect(() => {
-    mounted = true;
+    mounted.current = true;
     return () => {
-      mounted = false;
+      mounted.current = false;
     };
   }, []);
 
@@ -32,33 +38,39 @@ const Table = props => {
     setPage(0);
   }, [props.entryFromDate]);
 
-  const handleChangePage = useCallback((_=undefined, newPage) => {
+  const handleChangePage = useCallback((_ = undefined, newPage) => {
     setPage(newPage);
   }, []);
 
-  const handleChangeRowsPerPage = useCallback(event => {
+  const handleChangeRowsPerPage = useCallback((event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   }, []);
 
-  const goToEditPage = useCallback(id => {
-    const entries = [...props.entryFromDate];
-    let selectedEntry = entries.filter(entry => entry._id === id)[0];
-    appContext.lockRoute(false);
-    mainPageContext.history.push({
-      pathname: `/editPage`,
-      fromTable: selectedEntry
-    });
-  });
+  const goToEditPage = useCallback(
+    (id) => {
+      const entries = [...props.entryFromDate];
+      let selectedEntry = entries.filter((entry) => entry._id === id)[0];
+      appContext.lockRoute(false);
+      mainPageContext.history.push({
+        pathname: `/editPage`,
+        fromTable: selectedEntry,
+      });
+    },
+    [props, appContext, mainPageContext]
+  );
 
-  const getId = useCallback(id => {
-    set_Id(id);
-    setModal(true);
-  });
+  const getId = useCallback(
+    (id) => {
+      set_Id(id);
+      setModal(true);
+    },
+    [set_Id, setModal]
+  );
 
   const setModalOption = useCallback(() => {
     if (mounted) {
-      setModal(prevModalValue => {
+      setModal((prevModalValue) => {
         return !prevModalValue;
       });
     }
@@ -66,7 +78,7 @@ const Table = props => {
 
   const deleteDateEntry = useCallback(() => {
     mainPageContext.deleteDateEntry(_id, setModalOption);
-  });
+  }, [_id, mainPageContext, setModalOption]);
 
   return (
     <>

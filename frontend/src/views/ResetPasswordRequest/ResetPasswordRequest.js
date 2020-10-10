@@ -14,26 +14,26 @@ const ResetPasswordRequest = (props) => {
   );
   const [modal, setModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const modalHandler = useCallback(
-    (message) => {
-      setModal((prevModalValue) => {
-        return !prevModalValue;
-      });
-      setModalMessage((prevModalMessage) => {
-        return prevModalMessage === "" ? message : "";
-      });
-    },
-    [modal, modalMessage]
-  );
-  const navigateTo = useCallback(() => {
-    window.location.reload();
-  });
-  const submit = useCallback((values) => {
-    const body = {
-      email: values.email,
-    };
-    resetPasswordRequest(body, modalHandler);
+  const modalHandler = useCallback((message) => {
+    setModal((prevModalValue) => {
+      return !prevModalValue;
+    });
+    setModalMessage((prevModalMessage) => {
+      return prevModalMessage === "" ? message : "";
+    });
   }, []);
+  const navigateTo = () => {
+    window.location.reload();
+  };
+  const submit = useCallback(
+    (values) => {
+      const body = {
+        email: values.email,
+      };
+      resetPasswordRequest(body, modalHandler);
+    },
+    [modalHandler, resetPasswordRequest]
+  );
   const afterForm = (
     <>
       <Button tag={Link} to="/" color="info" className="mt-2">

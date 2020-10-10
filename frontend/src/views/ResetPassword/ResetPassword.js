@@ -14,27 +14,27 @@ const ResetPassword = (props) => {
   const [modal, setModal] = useState(false);
   const [resetSuccess, setResetSuccess] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const modalHandler = useCallback(
-    (message) => {
-      setModal((prevModalValue) => {
-        return !prevModalValue;
-      });
-      setModalMessage((prevModalMessage) => {
-        return prevModalMessage === "" ? message : "";
-      });
-    },
-    [modal, modalMessage]
-  );
-  const submit = useCallback((values) => {
-    const body = {
-      password: values.password,
-      token: token,
-    };
-    resetPassword(body, modalHandler, setResetSuccess);
+  const modalHandler = useCallback((message) => {
+    setModal((prevModalValue) => {
+      return !prevModalValue;
+    });
+    setModalMessage((prevModalMessage) => {
+      return prevModalMessage === "" ? message : "";
+    });
   }, []);
-  const navigateTo = useCallback(() => {
+  const submit = useCallback(
+    (values) => {
+      const body = {
+        password: values.password,
+        token: token,
+      };
+      resetPassword(body, modalHandler, setResetSuccess);
+    },
+    [modalHandler, resetPassword, token]
+  );
+  const navigateTo = () => {
     window.location.reload();
-  });
+  };
 
   const afterForm = (
     <>

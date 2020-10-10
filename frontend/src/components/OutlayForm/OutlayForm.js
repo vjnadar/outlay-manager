@@ -3,16 +3,17 @@ import { Form, FormGroup, Input, Button, Label } from "reactstrap";
 import { incomeArray, expenseArray } from "../../constants/entryTypes";
 import "./OutlayForm.scss";
 
-const OutlayForm = props => {
+const OutlayForm = (props) => {
+  const { flowtype, itype, etype, setFieldValue } = props;
   useEffect(() => {
-    if (props.flowtype === "expense" && props.itype) {
-      props.setFieldValue("itype", "");
-      props.setFieldValue("iCustom", "");
-    } else if (props.flowtype === "income" && props.etype) {
-      props.setFieldValue("etype", "");
-      props.setFieldValue("eCustom", "");
+    if (flowtype === "expense" && itype) {
+      setFieldValue("itype", "");
+      setFieldValue("iCustom", "");
+    } else if (flowtype === "income" && etype) {
+      setFieldValue("etype", "");
+      setFieldValue("eCustom", "");
     }
-  }, [props.flowtype]);
+  }, [flowtype, itype, etype, setFieldValue]);
 
   return (
     <>
