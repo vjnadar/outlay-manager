@@ -21,12 +21,13 @@ app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  //6
+  // res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "OPTIONS,GET,POST,PUT,PATCH,DELETE"
   );
-  res.setHeader("Access-Control-Allow-Header", "Set-Cookie");
+  res.setHeader("Access-Control-Allow-Headers", "Set-Cookie");
   // res.setHeader('Access-Control-Allow-Headers','Content-Type,Authorisation');
   // res.setHeader(
   //   "Access-Control-Allow-Headers",
