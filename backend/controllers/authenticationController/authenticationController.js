@@ -86,7 +86,7 @@ exports.signin = async (req, res, next) => {
       expiresIn: "1h",
     });
     //5
-    res.status(200).cookie("token", "token", { httpOnly: true,secure:true}).json({
+    res.status(200).cookie("token", "token", { httpOnly: true}).json({
       message: "Login was sucessful!",
       token,
       user_id: user._id,
