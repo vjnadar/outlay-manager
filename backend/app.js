@@ -8,12 +8,17 @@ const cors = require("cors");
 const helmet=require("helmet");
 const connectToMongoDb = require("./databaseConnection/connectToDb")
   .connectToDb;
+//1  
+const cookieParser=require("cookie-parser");  
 const getDbAccess = require("./databaseConnection/connectToDb").getDbAccess;
 require("dotenv").config();
-
+//2
 const corsVal=process.env.NODE_ENV==="PROD"?{ origin: "https://eager-kalam-5e53c6.netlify.app", credentials: true }:{}
+//3
 app.use(cors(corsVal));
 app.use(helmet());
+//4
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
