@@ -86,18 +86,24 @@ exports.signin = async (req, res, next) => {
       expiresIn: "1h",
     });
     //5
-    console.log()
-    res
-      .status(200)
-      .cookie("token", "token", {
-        httpOnly: true,
-      })
-      .json({
-        message: "Login was sucessful!",
-        token,
-        user_id: user._id,
-        expirationTime: 3601,
-      });
+    const httpOnlyCookieAttri =
+      process.env.NODE_ENV !== "DEV"
+        ? {
+            httpOnly: true,
+            sameSite: "None",
+            maxAge: 1209600000,
+            secure: true,
+          }
+        : {
+            httpOnly: true,
+            maxAge: 1209600000,
+          };
+    res.status(200).cookie("token", "token", httpOnlyCookieAttri).json({
+      message: "Login was sucessful!",
+      token,
+      user_id: user._id,
+      expirationTime: 3601,
+    });
   } catch (error) {
     next(error);
   }
