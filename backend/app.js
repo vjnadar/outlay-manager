@@ -11,7 +11,8 @@ const connectToMongoDb = require("./databaseConnection/connectToDb")
 const getDbAccess = require("./databaseConnection/connectToDb").getDbAccess;
 require("dotenv").config();
 
-app.use(cors());
+const corsVal=process.env.NODE_ENV==="PROD"?{ origin: "https://eager-kalam-5e53c6.netlify.app", credentials: true }:{}
+app.use(cors(corsVal));
 app.use(helmet());
 app.use(bodyParser.json());
 app.use((req, res, next) => {
