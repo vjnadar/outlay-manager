@@ -16,7 +16,7 @@ export const postDateData = (
   return dispatch => {
     dispatch(postDateDataStart());
     axios
-      .post("/main/postDateData", entries,{ withCredentials: true })
+      .post("/main/postDateData", entries)
       .then(res => {
         dispatch(postDateDataSuccess(res.data));
         resetFormCallback();

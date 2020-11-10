@@ -69,9 +69,8 @@ export const signupPostCredentialsFailed = error => {
 export const signinPostCredentials = (credentials, modalHandler) => {
   return dispatch => {
     dispatch(authenticationStart());
-    //6
     axios
-      .post("/authentication/signin", credentials,{ withCredentials: true })
+      .post("/authentication/signin", credentials)
       .then(res => {
         const expTimeToMilliseconds = res.data.expirationTime * 1000;
         const expirationDate = new Date(

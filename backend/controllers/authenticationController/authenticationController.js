@@ -85,20 +85,7 @@ exports.signin = async (req, res, next) => {
     let token = jwt.sign({ user_id: user._id.toString() }, process.env.SALT, {
       expiresIn: "1h",
     });
-    //5
-    const httpOnlyCookieAttri =
-      process.env.NODE_ENV !== "DEV"
-        ? {
-            httpOnly: true,
-            sameSite: "None",
-            maxAge: 1209600000,
-            secure: true,
-          }
-        : {
-            httpOnly: true,
-            maxAge: 1209600000,
-          };
-    res.status(200).cookie("token", "token", httpOnlyCookieAttri).json({
+    res.status(200).json({
       message: "Login was sucessful!",
       token,
       user_id: user._id,

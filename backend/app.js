@@ -8,28 +8,19 @@ const cors = require("cors");
 const helmet=require("helmet");
 const connectToMongoDb = require("./databaseConnection/connectToDb")
   .connectToDb;
-//1  
-const cookieParser=require("cookie-parser");  
 const getDbAccess = require("./databaseConnection/connectToDb").getDbAccess;
 require("dotenv").config();
-//2
-const corsVal=process.env.NODE_ENV!=="DEV"?{ origin: "https://eager-kalam-5e53c6.netlify.app", credentials: true }:{origin: "http://localhost:3000", credentials: true }
-//3
-app.use(cookieParser());
-console.log(corsVal)
-app.use(cors(corsVal));
-app.use(helmet());
-//4
 
+app.use(cors());
+app.use(helmet());
 app.use(bodyParser.json());
 app.use((req, res, next) => {
-  //6
-  // res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "OPTIONS,GET,POST,PUT,PATCH,DELETE"
   );
-  res.setHeader("Access-Control-Allow-Headers", "Set-Cookie");
+  // res.setHeader("Access-Control-Allow-Headers", "Set-Cookie");
   // res.setHeader('Access-Control-Allow-Headers','Content-Type,Authorisation');
   // res.setHeader(
   //   "Access-Control-Allow-Headers",
