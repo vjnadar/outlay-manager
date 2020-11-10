@@ -86,13 +86,12 @@ exports.signin = async (req, res, next) => {
       expiresIn: "1h",
     });
     //5
+    console.log()
     res
       .status(200)
       .cookie("token", "token", {
         httpOnly: true,
-        sameSite: "None",
-        maxAge: 1209600000,
-        secure: !(process.env.NODE_ENV !== "DEV"),
+        secure: !(process.env.NODE_ENV === "DEV"),
       })
       .json({
         message: "Login was sucessful!",
