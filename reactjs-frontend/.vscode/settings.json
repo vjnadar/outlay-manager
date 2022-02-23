@@ -1,0 +1,16 @@
+{
+    "eslint.options": {
+        "overrideConfigFile": "C:/Users/chari/Desktop/GitHub/outlay-manager/reactjs-frontend/.eslintrc.json"
+    },
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+}
