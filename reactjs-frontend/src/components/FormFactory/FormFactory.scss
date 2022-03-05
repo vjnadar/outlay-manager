@@ -1,0 +1,179 @@
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  margin: 0 auto;
+  @media (min-width: 40rem) {
+    margin-top: 100px;
+  }
+  .title {
+    text-align: center;
+    color: white;
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .beforeForm {
+    margin-bottom: 0.5rem;
+    font-size: large;
+    font-weight: 100;
+    color: rgb(0, 0, 0);
+  }
+  .form {
+    padding: 0.9rem;
+    width: 100%;
+    margin: 0 auto;
+    color: white;
+    border-radius: 2px;
+    background-color: rgb(180, 180, 180) 0.3px solid;
+    box-shadow: 0.3px 0.3px 0.3px 0.3px rgba(85, 85, 85, 0.5);
+    @media (min-width: 40rem) {
+      width: 30%;
+      margin: auto;
+      padding: 1rem 1rem;
+      color: white;
+      min-width: 30rem;
+      max-width: 40rem;
+      border: rgb(180, 180, 180) 0.5px solid;
+      border-radius: 5px;
+      background-color: rgba(0, 0, 0, 0.4);
+      box-shadow: 0.3px 0.3px 0.3px 0.3px rgba(85, 85, 85, 0.5);
+    }
+    @media (min-width: 62.5rem) {
+      width: 40%;
+      margin: auto;
+      padding: 2rem 2rem;
+      color: white;
+      min-width: 28rem;
+      max-width: 40rem;
+      border: rgb(180, 180, 180) 0.3px solid;
+      border-radius: 5px;
+      background-color: rgba(0, 0, 0, 0.4);
+      box-shadow: 0.3px 0.3px 0.3px 0.3px rgba(85, 85, 85, 0.5);
+    }
+    select,
+    input,
+    label {
+      display: block;
+      margin-top: 1rem;
+      width: 100%;
+      font-weight: 400;
+    }
+    select,
+    input {
+      font-family: inherit;
+      border-radius: 0.3rem;
+      border: 0.06rem solid rgb(196, 196, 196);
+      padding: 0.3rem;
+    }
+    select:focus {
+      outline: none;
+      background: rgb(201, 231, 243);
+      border-color: rgb(17, 140, 189);
+    }
+    option {
+      position: absolute;
+      background-color: white;
+      top: 100%;
+      left: 0;
+      right: 0;
+      z-index: 99;
+    }
+    input:focus {
+      outline: none;
+      background: rgb(201, 231, 243);
+      border-color: rgb(17, 140, 189);
+    }
+    input[type="checkbox"],
+    input[type="checkbox"] + label {
+      width: auto;
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .checkbox-container {
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      font-size: small;
+      vertical-align: middle;
+      input[type="checkbox"] {
+        width: 25px;
+        height: 25px;
+      }
+    }
+    .radio-container {
+      display: inline-flex;
+      flex-direction: row-reverse;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .radio-container input,
+    .radio-container label {
+      margin: 0;
+    }
+
+    .radio-container input {
+      width: 20px;
+    }
+
+    .radio-container label {
+      width: calc(100% - 20px);
+    }
+  }
+
+  .buttonset {
+    margin-top: 0.5rem;
+  }
+  .formErrors {
+    color: white;
+    font-weight: lighter;
+  }
+  .formLink {
+    &:link {
+      display: block;
+      text-decoration: none;
+      margin-top: 1rem;
+      width: 100%;
+      color: white;
+      font-size: 0.8rem;
+      margin-bottom: 2px;
+    }
+    &:focus {
+      text-decoration: none;
+      color: grey;
+    }
+    &:visited {
+      text-decoration: none;
+      color: white;
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .file-box {
+    display: inline-block;
+    text-align: center;
+    align-items: center;
+    width: auto;
+    margin: auto;
+    padding: 0;
+    color: white;
+
+    .container {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      width: auto;
+      cursor: pointer;
+      &:hover {
+        background-color: rgb(10, 10, 10);
+        text-decoration: underline;
+      }
+    }
+  }
+  .textbox-container {
+    display: flex;
+  }
+}

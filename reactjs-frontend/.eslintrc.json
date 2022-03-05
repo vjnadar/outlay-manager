@@ -44,7 +44,7 @@
         "import/extensions": ["error", "never"],
         "import/prefer-default-export": 0,
         "import/no-anonymous-default-export": 0,
-        "import/no-unresolved": 2,
+        "import/no-unresolved": 1,
         "simple-import-sort/imports": "error",
         "simple-import-sort/exports": "error",
         "sort-imports": "off",
@@ -58,9 +58,16 @@
         "@typescript-eslint/no-inferrable-types": "warn",
         "@typescript-eslint/prefer-nullish-coalescing": "warn",
         "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn",
+        "react-hooks/exhaustive-deps": 0,
         "react/no-array-index-key": "off",
         "react/react-in-jsx-scope": "off",
+        "jsx-a11y/anchor-is-valid": [
+            "error",
+            {
+                "components": ["Link"],
+                "specialLink": ["to"]
+            }
+        ],
         "prettier/prettier": [
             "error",
             {
