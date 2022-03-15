@@ -8,13 +8,15 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
+import interceptors from "./interceptors";
 import reportWebVitals from "./reportWebVitals";
 import store from "./store";
 
+interceptors.setupInterceptors(store);
 ReactDOM.render(
     <React.StrictMode>
         <ErrorBoundary
-            fallbackRender={({ error, resetErrorBoundary }) => (
+            fallbackRender={({ error }) => (
                 <div role="alert">
                     <div>Oh no</div>
                     <pre>{error.message}</pre>

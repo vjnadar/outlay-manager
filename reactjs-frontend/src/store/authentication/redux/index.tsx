@@ -1,9 +1,16 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 
-import { ResetPasswordSubmitObj } from "../../../views/ResetPassword/types";
-import { SignInSubmitObj } from "../../../views/SignIn/types";
+import { clearAll } from "../../general/redux";
 import { AuthenticationSagaNames } from "../enums";
-import { AuthenticationState } from "../types";
+import {
+    AuthenticationState,
+    ResetPasswordRequestSubmitObj,
+    ResetPasswordSubmitObj,
+    SetAutomaticTimerObj,
+    SigninSubmitObj,
+    SignupSubmitObj,
+    SyncLogoutObj
+} from "../types";
 
 const initialState: AuthenticationState = {
     loading: false,
@@ -21,24 +28,24 @@ function createAuthenticationSlice() {
                 const currentState = state;
                 currentState.loading = true;
             },
-            signInSuccessful: (state, action) => {
+            signinSuccessful: (state, action) => {
                 const currentState = state;
                 currentState.loading = false;
                 currentState.token = action.payload;
                 currentState.error = null;
             },
-            signInFailed: (state, action) => {
+            signinFailed: (state, action) => {
                 const currentState = state;
                 currentState.loading = false;
                 currentState.error = action.payload;
             },
-            signUpSuccessful: (state, action) => {
+            signupSuccessful: (state, action) => {
                 const currentState = state;
                 currentState.loading = false;
                 currentState.successData = action.payload;
                 currentState.error = null;
             },
-            signUpFailed: (state, action) => {
+            signupFailed: (state, action) => {
                 const currentState = state;
                 currentState.loading = false;
                 currentState.error = action.payload;
@@ -70,27 +77,37 @@ function createAuthenticationSlice() {
                 currentState.loading = false;
                 currentState.error = action.payload;
             }
+        },
+        extraReducers: (builder) => {
+            builder.addCase(clearAll, (state) => {
+                const currentState = state;
+                currentState.loading = false;
+                currentState.successData = null;
+                currentState.error = null;
+                currentState.token = "";
+                currentState.message = "";
+            });
         }
     });
 }
 const { reducer, actions } = createAuthenticationSlice();
 export const {
     authenticationStart,
-    signInSuccessful,
-    signInFailed,
-    signUpSuccessful,
-    signUpFailed,
+    signinSuccessful,
+    signinFailed,
+    signupSuccessful,
+    signupFailed,
     logoutMessage,
     clearLogoutMessage,
     logout,
     resetPasswordSuccessful,
     resetPasswordFailed
 } = actions;
-export const signInSagaActionCreator = createAction<SignInSubmitObj>(AuthenticationSagaNames.SignInSaga);
-export const signUpSagaActionCreator = createAction(AuthenticationSagaNames.SignUpSaga);
+export const signinSagaActionCreator = createAction<SigninSubmitObj>(AuthenticationSagaNames.SignInSaga);
+export const signupSagaActionCreator = createAction<SignupSubmitObj>(AuthenticationSagaNames.SignUpSaga);
 export const automaticLogoutSagaActionCreator = createAction(AuthenticationSagaNames.AutomaticLogoutSaga);
-export const setAutomaticLogoutTimerSagaActionCreator = createAction(AuthenticationSagaNames.SetAutomaticLogoutTimerSaga);
-export const logoutSagaActionCreator = createAction(AuthenticationSagaNames.SyncLogoutSaga);
+export const setAutomaticLogoutTimerSagaActionCreator = createAction<SetAutomaticTimerObj>(AuthenticationSagaNames.SetAutomaticLogoutTimerSaga);
+export const logoutSagaActionCreator = createAction<SyncLogoutObj>(AuthenticationSagaNames.SyncLogoutSaga);
 export const resetPasswordSagaActionCreator = createAction<ResetPasswordSubmitObj>(AuthenticationSagaNames.ResetPasswordSaga);
-export const resetPasswordRequestActionCreator = createAction(AuthenticationSagaNames.ResetPasswordRequestSaga);
+export const resetPasswordRequestActionCreator = createAction<ResetPasswordRequestSubmitObj>(AuthenticationSagaNames.ResetPasswordRequestSaga);
 export default reducer;

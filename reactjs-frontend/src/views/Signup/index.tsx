@@ -1,7 +1,7 @@
 import "./Signup.scss";
 
 import { MouseEvent, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Button } from "reactstrap";
 
@@ -14,6 +14,7 @@ import { signupFormSpecs } from "./signupFormSpecs";
 
 function Signup(): JSX.Element {
     const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useDispatch();
     const [modalMessage, setModalMessage] = useState("");
     const { error, loading } = useSelector((state: RootState) => state.authenticationReducer);
     const navigate = useNavigate();
@@ -21,12 +22,10 @@ function Signup(): JSX.Element {
         setIsOpen(!isOpen);
         if (message) setModalMessage(message);
     }
-
     function submit(credentials: Credentials) {
-        const { signInSagaActionCreator } = actions;
-        signInSagaActionCreator({ credentials, modalHandler });
+        const { signupSagaActionCreator } = actions;
+        dispatch(signupSagaActionCreator({ credentials, modalHandler }));
     }
-
     function navigateTo(event: MouseEvent<HTMLButtonElement>) {
         if ((event.target as HTMLInputElement).name === "signin") {
             navigate("/signin");
@@ -78,7 +77,7 @@ function Signup(): JSX.Element {
                     <p>{modalMessage}</p>
                     <Button
                         onClick={() => {
-                            modalHandler();
+                            navigate("/signin");
                         }}
                         outline
                         color="info"

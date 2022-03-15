@@ -1,7 +1,5 @@
 import "./ButtonFactory.scss";
 
-import { ReactNode } from "react";
-
 import { ButtonTypes } from "./enums";
 import { ButtonFactoryProps } from "./types";
 
@@ -49,7 +47,6 @@ function ButtonFactory({ buttonSpecs, secondButton, resetForm }: ButtonFactoryPr
         }
         default: {
             button = null;
-            console.log("Invalid form");
             break;
         }
     }

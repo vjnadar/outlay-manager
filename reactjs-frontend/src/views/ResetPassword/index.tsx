@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "reactstrap";
 
@@ -12,6 +12,7 @@ import { resetPasswordFormSpecs } from "./resetPasswordFormSpecs";
 
 function ResetPassword() {
     const { token } = useParams();
+    const dispatch = useDispatch();
     const { error, loading } = useSelector((state: RootState) => state.authenticationReducer);
     const [isOpen, setIsOpen] = useState(false);
     const [resetSuccess, setResetSuccess] = useState(false);
@@ -25,7 +26,7 @@ function ResetPassword() {
             password: values.password as string,
             token
         };
-        resetPasswordSagaActionCreator({ newPasswordObj, modalHandler, setResetSuccess });
+        dispatch(resetPasswordSagaActionCreator({ newPasswordObj, modalHandler, setResetSuccess }));
     }
     function reload() {
         window.location.reload();

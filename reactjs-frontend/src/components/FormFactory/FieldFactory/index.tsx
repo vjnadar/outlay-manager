@@ -19,7 +19,6 @@ function FieldFactory({ formProps, inputFields }: FieldFactoryProps): JSX.Elemen
         <>
             {inputFields.map((field) => (
                 <Fragment key={`${field.name}`}>
-                    {/* eslint no-nested-ternary: 0 */}
                     {field.type === FieldTypes.Checkbox ? (
                         <>
                             <div className="checkbox-container">
@@ -110,8 +109,10 @@ function FieldFactory({ formProps, inputFields }: FieldFactoryProps): JSX.Elemen
                                         }
                                     }}
                                 >
-                                    <li>{/* <Avatar alt="Company_Logo" src="/static/images/companyLogo.PNG" /> */}</li>
-                                    &nbsp;{" "}
+                                    <li>
+                                        <Avatar alt="Company_Logo" src="/static/images/companyLogo.PNG" />
+                                    </li>
+                                    &nbsp;
                                     <li>
                                         <span> Upload Your Company Logo</span>
                                     </li>

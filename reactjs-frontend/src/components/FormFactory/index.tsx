@@ -58,13 +58,15 @@ function FormFactory({ formSpecs, submit, afterForm, beforeForm, secondButton }:
             return theObject;
         }, {} as FormFactoryValues);
         const schema = formSpecs.inputFields.reduce((obj, item) => {
-            const theObject = obj;
-            if (item.type === FieldTypes.ValidatorTextbox) {
-                item?.values?.forEach((element) => {
-                    theObject[element.name] = createValidationSchema(element.validation);
-                });
-            } else {
-                theObject[item.name] = createValidationSchema(item.validation);
+            if (item.validation) {
+                const theObject = obj;
+                if (item.type === FieldTypes.ValidatorTextbox) {
+                    item?.values?.forEach((element) => {
+                        theObject[element.name] = createValidationSchema(element.validation);
+                    });
+                } else {
+                    theObject[item.name] = createValidationSchema(item.validation);
+                }
             }
             return obj;
         }, {} as FormFactorySchema);
@@ -83,7 +85,6 @@ function FormFactory({ formSpecs, submit, afterForm, beforeForm, secondButton }:
                 </div>
                 <Formik
                     initialValues={initialValues}
-                    enableReinitialize
                     onSubmit={(values: FormikValues, actions: FormikHelpers<typeof initialValues>) => {
                         actions.validateForm(values).then(() => {
                             submit(values);

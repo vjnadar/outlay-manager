@@ -1,7 +1,7 @@
 import "./Signin.scss";
 
 import { MouseEvent, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Alert, Button } from "reactstrap";
 
@@ -14,6 +14,7 @@ import { signinFormSpecs } from "./signinFormSpecs";
 
 function Signin(): JSX.Element {
     const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useDispatch();
     const [modalMessage, setModalMessage] = useState("");
     const { message: logoutMessage, error, loading } = useSelector((state: RootState) => state.authenticationReducer);
     const navigate = useNavigate();
@@ -22,8 +23,8 @@ function Signin(): JSX.Element {
         if (message) setModalMessage(message);
     }
     function submit(credentials: Credentials) {
-        const { signInSagaActionCreator } = actions;
-        signInSagaActionCreator({ credentials, modalHandler });
+        const { signinSagaActionCreator } = actions;
+        dispatch(signinSagaActionCreator({ credentials, modalHandler }));
     }
     function navigateTo(event: MouseEvent<HTMLButtonElement>) {
         if ((event.target as HTMLInputElement).name === "signup") {
@@ -100,16 +101,7 @@ function Signin(): JSX.Element {
     if (loading) {
         content = <Spinner />;
     } else {
-        content = (
-            <Form
-                formSpecs={signinFormSpecs}
-                submit={(credentials: Credentials) => {
-                    submit(credentials);
-                }}
-                beforeForm={beforeForm}
-                afterForm={afterForm}
-            />
-        );
+        content = <Form formSpecs={signinFormSpecs} submit={(credentials: Credentials) => submit(credentials)} beforeForm={beforeForm} afterForm={afterForm} />;
     }
     if (error && error.type === "serverError") {
         content = null;

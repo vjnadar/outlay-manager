@@ -1,18 +1,7 @@
 import { createContext } from "react";
 
-import { AppContextType } from "./types";
+import { AppContextType, MainPageContextType } from "./types";
 
-// export const MainPageContext = createContext({
-//     modalHandler: {},
-//     dateChangeHandler: {},
-//     focusChangeHandler: {},
-//     deleteDateEntry: {},
-//     match: {},
-//     history: {}
-// });
+export const MainPageContext = createContext<MainPageContextType>({});
 
-export const AppContext = createContext<AppContextType | null>(null);
-// export const ResetPasswordContext = React.createContext({
-//     resetPasswordRequest: () => {},
-//     resetPassword: () => {}
-// });
+export const AppContext = createContext<AppContextType>({});

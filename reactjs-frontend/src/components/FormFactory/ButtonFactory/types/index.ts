@@ -1,4 +1,4 @@
-import { FormikProps, FormikState } from "formik";
+import { FormikState } from "formik";
 
 import { Buttons, FormFactoryValues } from "../../types";
 

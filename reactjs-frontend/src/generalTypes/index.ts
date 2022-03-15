@@ -13,3 +13,8 @@ export type EmptyObject = {
 export type Children = {
     children: ReactNode;
 };
+export type ErrorData = {
+    type: string;
+    message: string;
+    statusCode: number;
+};
