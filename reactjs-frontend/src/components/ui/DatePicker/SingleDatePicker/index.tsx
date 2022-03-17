@@ -18,8 +18,7 @@ function SingleDatePicker({ date, dateChange, focused, focusChange }: SingleDate
             onDateChange={(d: Moment) => dateChange(d)}
             focused={focused}
             /* @ts-ignore */
-            onFocusChange={({ f }) => focusChange(f)}
-            // PropTypes.func.isRequired
+            onFocusChange={({ focused: focusInput }) => focusChange(focusInput)}
             showClearDate={false}
             isOutsideRange={() => false}
             numberOfMonths={1}

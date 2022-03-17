@@ -43,8 +43,8 @@ function MainPage(): JSX.Element {
             setDate(moment());
             return;
         }
-        setDate(date);
-        dispatch(getMainPageDataSagaActionCreator({ date }));
+        setDate(dateMoment);
+        dispatch(getMainPageDataSagaActionCreator({ date: dateMoment }));
     }
     function deleteDateEntry(id: string, closeModalCallback: () => void) {
         dispatch(deleteDateEntrySagaActionCreator({ id, date, closeModalCallback }));
@@ -53,7 +53,9 @@ function MainPage(): JSX.Element {
         () => ({
             modalHandler,
             dateChangeHandler,
-            focusChangeHandler: setFocused,
+            focusChangeHandler: (focus: boolean) => {
+                setFocused(focus);
+            },
             deleteDateEntry
         }),
         [modalHandler, dateChangeHandler, setFocused, deleteDateEntry]
@@ -61,8 +63,7 @@ function MainPage(): JSX.Element {
     function handleSubmit(
         values: OutlayFormValues,
         resetForm: (nextState?: Partial<FormikState<OutlayFormValues>>) => void,
-        /* eslint-disable */
-        validateForm: (values?: any) => Promise<FormikErrors<OutlayFormValues>>
+        validateForm: (values?: OutlayFormValues) => Promise<FormikErrors<OutlayFormValues>>
     ) {
         const selectedDate =
             date.format("YYYY-MM-DD") === moment().format("YYYY-MM-DD") ? moment() : date.set({ hour: 23, minute: 59, millisecond: 0, second: 59 });
@@ -86,7 +87,6 @@ function MainPage(): JSX.Element {
     if (loading) {
         mainContent = <Spinner />;
     } else if (serverError && !entryFromDate && !grandTotal.length) {
-        console.log("Error");
         mainContent = (
             <Row>
                 <Col>
@@ -100,7 +100,21 @@ function MainPage(): JSX.Element {
     let outlayModalForm = null;
     if (date) {
         outlayModalForm = (
-            <OutlayModalForm isOpen={isOpen} modalHandler={modalHandler} handleSubmit={handleSubmit} date={date} initialValues={initialOutlayFormState} />
+            <OutlayModalForm
+                isOpen={isOpen}
+                modalHandler={() => {
+                    modalHandler();
+                }}
+                handleSubmit={(
+                    values: OutlayFormValues,
+                    resetForm: (nextState?: Partial<FormikState<OutlayFormValues>>) => void,
+                    validateForm: (values?: OutlayFormValues) => Promise<FormikErrors<OutlayFormValues>>
+                ) => {
+                    handleSubmit(values, resetForm, validateForm);
+                }}
+                date={date}
+                initialValues={initialOutlayFormState}
+            />
         );
     }
 

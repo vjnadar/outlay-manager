@@ -13,7 +13,7 @@ export type MainPageContextType =
     | {
           modalHandler: () => void;
           dateChangeHandler: (dateMoment?: Moment) => void;
-          focusChangeHandler: Dispatch<SetStateAction<boolean>>;
+          focusChangeHandler: (focus: boolean) => void;
           deleteDateEntry: (id: string, closeModalCallback: () => void) => void;
       }
     | EmptyObject;

@@ -1,9 +1,8 @@
 import { Moment } from "moment";
-import { Dispatch, SetStateAction } from "react";
 
 export type SingleDatePickerProps = {
     date: Moment;
     focused: boolean;
-    focusChange: Dispatch<SetStateAction<boolean>>;
+    focusChange: (focus: boolean) => void;
     dateChange: (date?: Moment) => void;
 };

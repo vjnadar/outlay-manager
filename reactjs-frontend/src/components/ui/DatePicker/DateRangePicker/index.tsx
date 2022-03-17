@@ -1,33 +1,29 @@
-// import React from "react";
-// import { DateRangePicker as ReactDateRangePicker } from "react-dates";
-
-// function DateRangePicker(props) {
-//     return (
-//         <ReactDateRangePicker
-//             openDirection={props.dataAvailable ? "up" : "down"}
-//             startDate={props.startDate} // momentPropTypes.momentObj or null,
-//             startDateId="From" // PropTypes.string.isRequired,
-//             endDate={props.endDate} // momentPropTypes.momentObj or null,
-//             endDateId="To" // PropTypes.string.isRequired,
-//             onDatesChange={({ startDate, endDate }) => {
-//                 props.dateChangeHandler(startDate, endDate);
-//             }} // PropTypes.func.isRequired,
-//             focusedInput={props.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-//             isOutsideRange={() => false}
-//             numberOfMonths={1}
-//             small
-//             onFocusChange={(focusedInput) => {
-//                 props.focusChangeHandler(focusedInput);
-//             }} // PropTypes.func.isRequired,
-//         />
-//     );
-// }
-
-// export default React.memo(DateRangePicker);
+import { Moment } from "moment";
 import React from "react";
+import { DateRangePicker as ReactDateRangePicker } from "react-dates";
 
-function index() {
-    return <div>index</div>;
+import { DateRangePickerProps } from "./types";
+
+function DateRangePicker({ dataAvailable, startDate, endDate, dateChangeHandler, focusedInput, focusChangeHandler }: DateRangePickerProps) {
+    return (
+        <ReactDateRangePicker
+            openDirection={dataAvailable ? "up" : "down"}
+            startDate={startDate}
+            startDateId="From"
+            endDate={endDate}
+            endDateId="To"
+            onDatesChange={({ startDate: start, endDate: end }: { startDate: Moment | null; endDate: Moment | null }) => {
+                dateChangeHandler(start, end);
+            }}
+            focusedInput={focusedInput}
+            isOutsideRange={() => false}
+            numberOfMonths={1}
+            small
+            onFocusChange={(focused) => {
+                focusChangeHandler(focused);
+            }}
+        />
+    );
 }
 
-export default index;
+export default React.memo(DateRangePicker);
