@@ -8,7 +8,6 @@ import { MainViewAndControl, OutlayModalForm } from "../../components";
 import { Spinner } from "../../components/ui";
 import { AppContext, MainPageContext } from "../../contexts";
 import { AppContextType, MainPageContextType } from "../../contexts/types";
-// import SetTokenHeader from "../../hoc/SetTokenHeader/SetTokenHeader";
 import { deleteDateEntrySagaActionCreator, getMainPageDataSagaActionCreator, postMainPageDataSagaActionCreator } from "../../store/mainPage/redux";
 import { OutlayFormValues } from "../../store/mainPage/types";
 import { RootState } from "../../store/types";
@@ -33,7 +32,7 @@ function MainPage(): JSX.Element {
     });
     useEffect(() => {
         setRouteLock(true);
-        if (token) dispatch(getMainPageDataSagaActionCreator({ date }));
+        if (token) dispatch(getMainPageDataSagaActionCreator({ date: date.toISOString() }));
     }, []);
     function modalHandler() {
         setIsOpen(!isOpen);
@@ -44,10 +43,10 @@ function MainPage(): JSX.Element {
             return;
         }
         setDate(dateMoment);
-        dispatch(getMainPageDataSagaActionCreator({ date: dateMoment }));
+        dispatch(getMainPageDataSagaActionCreator({ date: dateMoment.toISOString() }));
     }
     function deleteDateEntry(id: string, closeModalCallback: () => void) {
-        dispatch(deleteDateEntrySagaActionCreator({ id, date, closeModalCallback }));
+        dispatch(deleteDateEntrySagaActionCreator({ id, date: date.toISOString(), closeModalCallback }));
     }
     const mainPageContext = useMemo<MainPageContextType>(
         () => ({
@@ -66,7 +65,9 @@ function MainPage(): JSX.Element {
         validateForm: (values?: OutlayFormValues) => Promise<FormikErrors<OutlayFormValues>>
     ) {
         const selectedDate =
-            date.format("YYYY-MM-DD") === moment().format("YYYY-MM-DD") ? moment() : date.set({ hour: 23, minute: 59, millisecond: 0, second: 59 });
+            date.format("YYYY-MM-DD") === moment().format("YYYY-MM-DD")
+                ? moment().toISOString()
+                : date.set({ hour: 23, minute: 59, millisecond: 0, second: 59 }).toISOString();
         const entries = setEntries(values, selectedDate, "");
         if (entries) {
             validateForm(values).then(() => {

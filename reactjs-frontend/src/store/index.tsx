@@ -25,10 +25,10 @@ export default configureStore({
                     AuthenticationSagaNames.ResetPasswordSaga,
                     AuthenticationSagaNames.ResetPasswordRequestSaga,
                     MainPageSagaNames.GetMainPageDataSaga,
+                    MainPageSagaNames.PostMainPageDataDaga,
                     MainPageSagaNames.UpdateDateEntrySaga,
-                    StatsPageSagaName.FetchStats,
-                    "mainPage/getMainPageDataSuccessful",
-                    "stats/fetchStatsSuccessful"
+                    MainPageSagaNames.DeleteDateEntrySaga,
+                    StatsPageSagaName.FetchStats
                 ]
             }
         }).concat(sagaMiddleware)

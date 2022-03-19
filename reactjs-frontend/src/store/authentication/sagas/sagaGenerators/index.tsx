@@ -51,7 +51,6 @@ export function* signInSaga({ payload }: { type: string; payload: SigninSubmitOb
                     message: "Missing credentials",
                     statusCode: 401
                 };
-                payload.modalHandler("Please fill in all the details");
                 break;
             case "This user does not have an account and should register!":
                 errorData = {
@@ -59,7 +58,6 @@ export function* signInSaga({ payload }: { type: string; payload: SigninSubmitOb
                     message: "This user does not have an account!",
                     statusCode: 401
                 };
-                payload.modalHandler("The account for this email id doesnt exist. Please sign up!");
                 break;
             case "The entered password is invalid!":
                 errorData = {
@@ -67,11 +65,9 @@ export function* signInSaga({ payload }: { type: string; payload: SigninSubmitOb
                     message: "The entered password is invalid!",
                     statusCode: 401
                 };
-                payload.modalHandler("The entered password is invalid!");
                 break;
             default:
                 errorData = { type: "serverError", error };
-                payload.modalHandler("Something went wrong. Try again later!");
                 break;
         }
         yield put(signinFailed(errorData));
@@ -82,7 +78,6 @@ export function* signup({ payload }: { type: string; payload: SignupSubmitObj })
         yield put(authenticationStart());
         const result: AxiosResponse<SuccessData> = yield axios.post("/authentication/signup", payload.credentials);
         yield put(signupSuccessful(result.data));
-        payload.modalHandler("The registration was successful! Go back to the sign in page and just sign in!");
     } catch (error) {
         /* @ts-ignore: Error has type any. */
         const errorType = error.response.data.message ?? error;
@@ -94,7 +89,6 @@ export function* signup({ payload }: { type: string; payload: SignupSubmitObj })
                     message: "Missing credentials",
                     statusCode: 401
                 };
-                payload.modalHandler("Please fill in all the details");
                 break;
             case "The user account already exists":
                 errorData = {
@@ -102,11 +96,9 @@ export function* signup({ payload }: { type: string; payload: SignupSubmitObj })
                     message: "The user account already exists",
                     statusCode: 401
                 };
-                payload.modalHandler("The user account already exists! Use a different email id.");
                 break;
             default:
                 errorData = { type: "serverError", error };
-                payload.modalHandler("Something went wrong. Try again later!");
                 break;
         }
         yield put(signupFailed(errorData));
@@ -116,7 +108,6 @@ export function* resetPasswordRequest({ payload }: { type: string; payload: Rese
     try {
         yield put(authenticationStart());
         const result: AxiosResponse<SuccessData> = yield axios.put("/authentication/resetPasswordRequest", payload.resetPasswordRequestSubmitObj);
-        payload.modalHandler("We sent a mail to your registered email account. Please check your mail.");
         yield put(resetPasswordSuccessful(result.data));
     } catch (error) {
         /* @ts-ignore: Error has type any. */
@@ -129,7 +120,6 @@ export function* resetPasswordRequest({ payload }: { type: string; payload: Rese
                     message: "Not a registered user account",
                     statusCode: 401
                 };
-                payload.modalHandler("This user does not have an account and should register!");
                 break;
             case "A mail was already sent! Please check your email account!":
                 errorData = {
@@ -137,7 +127,6 @@ export function* resetPasswordRequest({ payload }: { type: string; payload: Rese
                     message: "A mail was already sent.",
                     statusCode: 401
                 };
-                payload.modalHandler("A mail was already sent! Please check your email account!");
                 break;
             case "The email value was not present.":
                 errorData = {
@@ -145,11 +134,9 @@ export function* resetPasswordRequest({ payload }: { type: string; payload: Rese
                     message: "The request did not have all the values.",
                     statusCode: 400
                 };
-                payload.modalHandler("Enter your email!");
                 break;
             default:
                 errorData = { type: "serverError", error };
-                payload.modalHandler("Something went wrong. Try again later!");
                 break;
         }
         yield put(resetPasswordFailed(errorData));
@@ -159,8 +146,6 @@ export function* resetPassword({ payload }: { type: string; payload: ResetPasswo
     try {
         yield put(authenticationStart());
         const result: AxiosResponse<SuccessData> = yield axios.put("/authentication/resetPassword", payload.newPasswordObj);
-        payload.setResetSuccess(true);
-        payload.modalHandler("Your password was changed successfully. Login with your new password.");
         yield put(resetPasswordSuccessful(result.data));
     } catch (error) {
         /* @ts-ignore: Error has type any. */
@@ -168,22 +153,18 @@ export function* resetPassword({ payload }: { type: string; payload: ResetPasswo
         let errorData = null;
         switch (errorType) {
             case "The token expired!":
-                payload.setResetSuccess(true);
                 errorData = {
                     type: "formError",
                     message: "The token expired!",
                     statusCode: 401
                 };
-                payload.modalHandler("The token expired! Please try again.");
                 break;
             case "The token is invalid!":
-                payload.setResetSuccess(true);
                 errorData = {
                     type: "formError",
-                    message: "The token expired!",
+                    message: "The token is invalid!",
                     statusCode: 401
                 };
-                payload.modalHandler("The token is invalid! Try again.");
                 break;
             case "This user does not have an account and should register!":
                 errorData = {
@@ -191,7 +172,6 @@ export function* resetPassword({ payload }: { type: string; payload: ResetPasswo
                     message: "Not a registered user account",
                     statusCode: 401
                 };
-                payload.modalHandler("This user does not have an account and should register!");
                 break;
             case "Request failed. Request did not have all the values necessary for this endpoint!":
                 errorData = {
@@ -199,11 +179,9 @@ export function* resetPassword({ payload }: { type: string; payload: ResetPasswo
                     message: "The request did not have all the values.",
                     statusCode: 400
                 };
-                payload.modalHandler("Request did not have all the values necessary for this endpoint!");
                 break;
             default:
                 errorData = { type: "serverError", error };
-                payload.modalHandler("Something went wrong. Try again later!");
                 break;
         }
         yield put(resetPasswordFailed(errorData));
@@ -233,9 +211,9 @@ export function* automaticLogout() {
     const expirationDate = new Date(dateFromLocalStorage);
     const token = localStorage.getItem("token");
     if (!token) {
-        yield put(logoutSagaActionCreator);
+        yield put(logoutSagaActionCreator());
     } else if (expirationDate <= new Date()) {
-        yield put(logoutSagaActionCreator);
+        yield put(logoutSagaActionCreator());
     } else {
         yield put(signinSuccessful(token));
         const reducedTime = expirationDate.getTime() - new Date().getTime();

@@ -14,7 +14,8 @@ function OutlayModalForm({ isOpen, modalHandler, handleSubmit, initialValues, da
                     handleSubmit(values, actions.resetForm, actions.validateForm);
                 }}
                 validationSchema={outlayFormValidationSchema()}
-                render={(formProps) => (
+            >
+                {(formProps) => (
                     <OutlayForm
                         handleSubmit={formProps.handleSubmit}
                         handleBlur={formProps.handleBlur}
@@ -30,7 +31,7 @@ function OutlayModalForm({ isOpen, modalHandler, handleSubmit, initialValues, da
                         setFieldValue={formProps.setFieldValue}
                     />
                 )}
-            />
+            </Formik>
         </Modal>
     );
 }

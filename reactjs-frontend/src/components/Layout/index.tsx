@@ -8,8 +8,8 @@ import Navbar from "./Navbar";
 export function Layout({ children }: Children): JSX.Element {
     return (
         <>
-            <Background />
             <Navbar />
+            <Background />
             <main className="children">{children}</main>
             <Footer />
         </>

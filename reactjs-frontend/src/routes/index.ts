@@ -25,12 +25,6 @@ export const landingPageRoutes: Routes[] = [
         name: "ResetPassword",
         component: OutlayManagerComponents.ResetPassword,
         lockRedirect: false
-    },
-    {
-        path: "*",
-        name: "WildCardRoute",
-        component: OutlayManagerComponents.Signin,
-        lockRedirect: false
     }
 ];
 export const mainAppRoutes: Routes[] = [
@@ -50,12 +44,6 @@ export const mainAppRoutes: Routes[] = [
         path: "statsPage/*",
         name: "StatsPage",
         component: OutlayManagerComponents.StatsPage,
-        lockRedirect: false
-    },
-    {
-        path: "*",
-        name: "WildCardRoute",
-        component: OutlayManagerComponents.MainPage,
         lockRedirect: false
     }
 ];

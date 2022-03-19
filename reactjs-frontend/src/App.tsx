@@ -1,6 +1,8 @@
+import "./App.scss";
+
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import { Layout, Spinner } from "./components";
 import { AppContext } from "./contexts";
@@ -32,6 +34,7 @@ function App(): JSX.Element {
                 {landingPageRoutes.map((route) => (
                     <Route key={route.name} path={route.path} element={<route.component />} />
                 ))}
+                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         );
     } else {
@@ -53,6 +56,7 @@ function App(): JSX.Element {
                             />
                         )
                     )}
+                    <Route path="*" element={<Navigate to="/mainPage" />} />
                 </>
             </Routes>
         );

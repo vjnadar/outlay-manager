@@ -1,18 +1,20 @@
 import { ChartTypeRegistry } from "chart.js";
 import moment, { Moment } from "moment";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FocusedInputShape } from "react-dates";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Graph, Spinner, StatsForm } from "../../components";
-import { fetchStatsSagaActionCreator, setDateEntries } from "../../store/statsPage/redux";
+import { clearSuccessDataAndErrorData, fetchStatsSagaActionCreator, setDateEntries } from "../../store/statsPage/redux";
 import { ExpenseData, IncomeData } from "../../store/statsPage/types";
 import { RootState } from "../../store/types";
 import { FlowType } from "../MainPage/types";
 
 function StatsPage(): JSX.Element {
     const dispatch = useDispatch();
-    const { lastStartDate, lastEndDate, income, expense, loading, incomeLabel, expenseLabel } = useSelector((state: RootState) => state.statsPageReducer);
+    const { lastStartDate, lastEndDate, income, expense, loading, incomeLabel, expenseLabel, successData } = useSelector(
+        (state: RootState) => state.statsPageReducer
+    );
     const [startDate, setStartDate] = useState<Moment | null>(lastStartDate ? moment(lastStartDate) : null);
     const [endDate, setEndDate] = useState<Moment | null>(lastEndDate ? moment(lastEndDate) : null);
     const [focusedInput, setFocusedInput] = useState<FocusedInputShape | null>(null);
@@ -26,11 +28,17 @@ function StatsPage(): JSX.Element {
             setFlowtype("income");
         }
     }
+    useEffect(() => {
+        dispatch(clearSuccessDataAndErrorData());
+    }, []);
+    useEffect(() => {
+        if (successData) setSingleFlowtype(income, expense);
+    }, [successData]);
     function getStats(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const dateRange = {
-            startDate: startDate as Moment,
-            endDate: endDate as Moment
+            startDate: startDate?.toISOString() as string,
+            endDate: endDate?.toISOString() as string
         };
         const alteredStartDate = moment(startDate).format("DD-MM-YYYY");
         const alteredEndDate = moment(endDate).format("DD-MM-YYYY");
@@ -39,12 +47,12 @@ function StatsPage(): JSX.Element {
         const dateEntries = {
             incomeDateLabel,
             expenseDateLabel,
-            startDate,
-            endDate
+            startDate: startDate?.toISOString(),
+            endDate: endDate?.toISOString()
         };
         dispatch(setDateEntries(dateEntries));
         setTouched(true);
-        dispatch(fetchStatsSagaActionCreator({ dateRange, setSingleFlowtype }));
+        dispatch(fetchStatsSagaActionCreator({ dateRange }));
     }
     function formHandler(event: ChangeEvent<HTMLInputElement>) {
         if ((event.target as HTMLInputElement).name === "flowtype") {

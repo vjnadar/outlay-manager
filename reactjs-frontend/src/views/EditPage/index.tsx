@@ -7,8 +7,6 @@ import { Button, Col, Container, Row } from "reactstrap";
 
 import { Card, Modal, OutlayForm, Spinner } from "../../components";
 import { AppContext } from "../../contexts";
-// import SetTokenHeader from "../../hoc/SetTokenHeader/SetTokenHeader";
-// import axios from "../../http/axios";
 import { updateDateEntrySagaActionCreator } from "../../store/mainPage/redux";
 import { RootState } from "../../store/types";
 import { findIfCustom, outlayFormValidationSchema, setEntries } from "../../utilityMethods";
@@ -54,7 +52,7 @@ function EditPage(): JSX.Element {
     function updateRecord(values: InitialOutlayFormState) {
         const { _id, date, time } = (location.state as LocationType).fromTable;
         const dateTime = new Date(`${date} ${time}`);
-        const selectedDate = moment(dateTime);
+        const selectedDate = moment(dateTime).toISOString();
         const newEntry = setEntries(values, selectedDate, _id);
         dispatch(updateDateEntrySagaActionCreator({ newEntry, modalHandler }));
     }
@@ -108,7 +106,8 @@ function EditPage(): JSX.Element {
                                         updateRecord(values);
                                     }}
                                     validationSchema={outlayFormValidationSchema()}
-                                    render={(formProps) => (
+                                >
+                                    {(formProps) => (
                                         <OutlayForm
                                             handleChange={formProps.handleChange}
                                             handleBlur={formProps.handleBlur}
@@ -126,7 +125,7 @@ function EditPage(): JSX.Element {
                                             setFieldValue={formProps.setFieldValue}
                                         />
                                     )}
-                                />
+                                </Formik>
                             </Col>
                         </Row>
                         <Row>

@@ -1,10 +1,9 @@
-import { Moment } from "moment";
 import * as Yup from "yup";
 
 import { expenseArray, incomeArray } from "../constants";
 import { Entry, OutlayFormValues } from "../store/mainPage/types";
 
-export function setEntries(values: OutlayFormValues, selectedDate: Moment, _id: string): Entry {
+export function setEntries(values: OutlayFormValues, selectedDate: string, _id: string): Entry {
     const entries = {
         _id: _id || "",
         flowtype: values.flowtype,

@@ -34,7 +34,7 @@ export type Entry = {
     flowtype: FlowType;
     type: string;
     amount: string;
-    dateTime: Moment;
+    dateTime: string;
 };
 export type SelectedDateEntry = {
     _id: string;
@@ -54,7 +54,7 @@ export type MainPageState = {
     grandTotal: GrandTotalObj[];
 };
 export type GetAllObj = {
-    date: Moment;
+    date: string;
 };
 export type OutlayFormValues = {
     flowtype: FlowType;
@@ -71,7 +71,7 @@ export type PostMainPageDataObj = {
 };
 export type DeleteDateEntryObj = {
     id: string;
-    date: Moment;
+    date: string;
     closeModalCallback: () => void;
 };
 export type GetDateDataResponse = SuccessData & {

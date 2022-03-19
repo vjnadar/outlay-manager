@@ -1,14 +1,14 @@
 import "./Signin.scss";
 
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Alert, Button } from "reactstrap";
 
-import Form from "../../components/FormFactory";
+import { FormFactory, Modal, Spinner } from "../../components";
 import { Credentials } from "../../components/FormFactory/types";
-import { Modal, Spinner } from "../../components/ui";
 import * as actions from "../../store/authentication/redux";
+import { clearAll } from "../../store/general/redux";
 import { RootState } from "../../store/types";
 import { signinFormSpecs } from "./signinFormSpecs";
 
@@ -18,13 +18,34 @@ function Signin(): JSX.Element {
     const [modalMessage, setModalMessage] = useState("");
     const { message: logoutMessage, error, loading } = useSelector((state: RootState) => state.authenticationReducer);
     const navigate = useNavigate();
+    useEffect(() => {
+        dispatch(clearAll());
+    }, []);
+    useEffect(() => {
+        switch (error?.message) {
+            case "Missing credentials":
+                modalHandler("Please fill in all the details");
+                break;
+            case "This user does not have an account!":
+                modalHandler("The account for this email id doesnt exist. Please sign up!");
+                break;
+            case "The entered password is invalid!":
+                modalHandler("The entered password is invalid!");
+                break;
+            default:
+                if (error?.type === "serverError") {
+                    modalHandler("Something went wrong. Try again later!");
+                }
+                break;
+        }
+    }, [error]);
     function modalHandler(message?: string) {
         setIsOpen(!isOpen);
         if (message) setModalMessage(message);
     }
     function submit(credentials: Credentials) {
         const { signinSagaActionCreator } = actions;
-        dispatch(signinSagaActionCreator({ credentials, modalHandler }));
+        dispatch(signinSagaActionCreator({ credentials }));
     }
     function navigateTo(event: MouseEvent<HTMLButtonElement>) {
         if ((event.target as HTMLInputElement).name === "signup") {
@@ -101,7 +122,9 @@ function Signin(): JSX.Element {
     if (loading) {
         content = <Spinner />;
     } else {
-        content = <Form formSpecs={signinFormSpecs} submit={(credentials: Credentials) => submit(credentials)} beforeForm={beforeForm} afterForm={afterForm} />;
+        content = (
+            <FormFactory formSpecs={signinFormSpecs} submit={(credentials: Credentials) => submit(credentials)} beforeForm={beforeForm} afterForm={afterForm} />
+        );
     }
     if (error && error.type === "serverError") {
         content = null;

@@ -25,7 +25,6 @@ export function Graph({ income, expense, flowtype, graphtype, incomeTitle, expen
             chart?.current.destroy();
         }
         if (income.length || expense.length) {
-            console.log("In");
             drawChart();
         }
     }, []);
@@ -40,7 +39,6 @@ export function Graph({ income, expense, flowtype, graphtype, incomeTitle, expen
     function drawChart() {
         const graphLabel = flowtype === "income" ? "Income" : "Expense";
         const text = flowtype === "income" ? incomeTitle : expenseTitle;
-        console.log(incomeTitle);
         const labels: string[] = [];
         const data: number[] = [];
         if (flowtype === "income") {
@@ -88,7 +86,7 @@ export function Graph({ income, expense, flowtype, graphtype, incomeTitle, expen
     }
     return (
         <Row>
-            <Col xs={{ size: 12, offset: 0 }} sm={{ size: 12, offset: 0 }} md={{ size: 12, offset: 0 }} lg={{ size: 7, offset: 3 }} xl={{ size: 4, offset: 3 }}>
+            <Col xs={{ size: 8, offset: 2 }} sm={{ size: 8, offset: 2 }} md={{ size: 8, offset: 2 }} lg={{ size: 7, offset: 3 }} xl={{ size: 4, offset: 3 }}>
                 {income.length || expense.length ? (
                     <Card body>
                         <canvas id="graph" ref={graphRef} />

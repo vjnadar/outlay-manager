@@ -1,4 +1,3 @@
-// import { Container } from "reactstrap";
 import "./Footer.scss";
 
 function Footer(): JSX.Element {

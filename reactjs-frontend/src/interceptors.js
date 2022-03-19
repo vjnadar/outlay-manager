@@ -1,4 +1,5 @@
 import axios from "./httpClient";
+import { logoutSagaActionCreator } from "./store/authentication/redux";
 
 export default {
     setupInterceptors: (store) => {
@@ -10,5 +11,16 @@ export default {
             }
             return configuration;
         });
+        axios.interceptors.response.use(
+            (response) => {
+                return response;
+            },
+            (error) => {
+                if (error.response.data.message === "jwt expired") {
+                    store.dispatch(logoutSagaActionCreator({ message: "Sorry. Your token expired! Log in again." }));
+                }
+                return Promise.reject(error);
+            }
+        );
     }
 };

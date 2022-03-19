@@ -52,10 +52,6 @@ function Table({ entryFromDate }: TableProps): JSX.Element {
             const selectedEntry = entries.filter((entry) => entry._id === idOfEntry)[0];
             setRouteLock(false);
             navigate(`/editPage`, { state: { fromTable: selectedEntry } });
-            // mainPageContext.history.push({
-            //     pathname: `/editPage`,
-            //     fromTable: selectedEntry
-            // });
         },
         [entryArray, setRouteLock]
     );

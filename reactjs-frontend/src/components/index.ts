@@ -1,3 +1,4 @@
+export { default as FormFactory } from "./FormFactory";
 export { Layout } from "./Layout";
 export { default as MainViewAndControl } from "./MainViewAndControl";
 export { default as OutlayForm } from "./OutlayForm";

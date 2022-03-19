@@ -1,14 +1,14 @@
 import "./Signup.scss";
 
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Button } from "reactstrap";
 
-import Form from "../../components/FormFactory";
+import { FormFactory, Modal, Spinner } from "../../components";
 import { Credentials } from "../../components/FormFactory/types";
-import { Modal, Spinner } from "../../components/ui";
 import * as actions from "../../store/authentication/redux";
+import { clearAll } from "../../store/general/redux";
 import { RootState } from "../../store/types";
 import { signupFormSpecs } from "./signupFormSpecs";
 
@@ -16,15 +16,36 @@ function Signup(): JSX.Element {
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
     const [modalMessage, setModalMessage] = useState("");
-    const { error, loading } = useSelector((state: RootState) => state.authenticationReducer);
+    const { error, loading, successData } = useSelector((state: RootState) => state.authenticationReducer);
     const navigate = useNavigate();
+    useEffect(() => {
+        dispatch(clearAll());
+    });
+    useEffect(() => {
+        switch (error?.message) {
+            case "Missing credentials":
+                modalHandler("Please fill in all the details");
+                break;
+            case "The user account already exists":
+                modalHandler("The user account already exists! Use a different email id.");
+                break;
+            default:
+                if (error?.type === "serverError") modalHandler("Something went wrong. Try again later!");
+                break;
+        }
+    }, [error]);
+    useEffect(() => {
+        if (successData) {
+            modalHandler("The registration was successful! Go back to the sign in page and just sign in!");
+        }
+    }, [successData]);
     function modalHandler(message?: string) {
         setIsOpen(!isOpen);
         if (message) setModalMessage(message);
     }
     function submit(credentials: Credentials) {
         const { signupSagaActionCreator } = actions;
-        dispatch(signupSagaActionCreator({ credentials, modalHandler }));
+        dispatch(signupSagaActionCreator({ credentials }));
     }
     function navigateTo(event: MouseEvent<HTMLButtonElement>) {
         if ((event.target as HTMLInputElement).name === "signin") {
@@ -77,6 +98,7 @@ function Signup(): JSX.Element {
                     <p>{modalMessage}</p>
                     <Button
                         onClick={() => {
+                            modalHandler();
                             navigate("/signin");
                         }}
                         outline
@@ -91,7 +113,7 @@ function Signup(): JSX.Element {
     if (loading) {
         content = <Spinner />;
     } else {
-        content = <Form formSpecs={signupFormSpecs} submit={(credentials: Credentials) => submit(credentials)} afterForm={afterForm} />;
+        content = <FormFactory formSpecs={signupFormSpecs} submit={(credentials: Credentials) => submit(credentials)} afterForm={afterForm} />;
     }
     if (error && error.type === "serverError") {
         content = null;

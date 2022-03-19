@@ -21,10 +21,9 @@ export type ExpenseData = {
     _id: { type: string; flowtype: "expense" };
     amount: number;
 };
-export type DateRange = { startDate: Moment; endDate: Moment };
+export type DateRange = { startDate: string; endDate: string };
 export type FetchStatsObj = {
     dateRange: DateRange;
-    setSingleFlowtype: (income: IncomeData[] | [], expense: ExpenseData[] | []) => void;
 };
 export type StatsPageState = {
     income: IncomeData[] | [];
@@ -34,6 +33,7 @@ export type StatsPageState = {
     expenseLabel: string;
     lastStartDate: string;
     lastEndDate: string;
+    successData: string;
     error: ErrorData | null;
 };
 export type DateEntries = {

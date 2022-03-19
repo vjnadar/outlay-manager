@@ -24,7 +24,7 @@ export function* getMainPageData({ payload }: { type: string; payload: GetAllObj
     try {
         yield put(getMainPageDataStarts());
         const [getDateDataResponse, getTotalResponse]: [AxiosResponse<GetDateDataResponse>, AxiosResponse<GetTotalResponse>] = yield axiosMain.all([
-            axios.get(`/main/getDateData/${payload.date.toISOString()}`),
+            axios.get(`/main/getDateData/${payload.date}`),
             axios.get("/main/getTotal/")
         ]);
         yield put(
@@ -54,12 +54,7 @@ export function* postMainPageData({ payload }: { type: string; payload: PostMain
         payload.modalHandler();
     } catch (error) {
         /* @ts-ignore:Error has type any */
-        if (error.response.data.message === "jwt expired") {
-            yield put(logoutSagaActionCreator({ message: "Sorry. Your token expired! Log in again." }));
-        } else {
-            /* @ts-ignore:Error has type any */
-            yield put(postMainPageDataFailed(error.response.data));
-        }
+        yield put(postMainPageDataFailed(error.response.data));
     }
 }
 export function* deleteDateEntry({ payload }: { type: string; payload: DeleteDateEntryObj }) {
@@ -72,12 +67,7 @@ export function* deleteDateEntry({ payload }: { type: string; payload: DeleteDat
         payload.closeModalCallback();
     } catch (error) {
         /* @ts-ignore:Error has type any */
-        if (error.response.data.message === "jwt expired") {
-            yield put(logoutSagaActionCreator({ message: "Sorry .Your token expired! Log in again." }));
-        } else {
-            /* @ts-ignore:Error has type any */
-            yield put(deleteDateEntryFailed(error.response.data));
-        }
+        yield put(deleteDateEntryFailed(error.response.data));
     }
 }
 export function* updateDateEntry({ payload }: { type: string; payload: UpdateDateEntryObj }) {
@@ -92,11 +82,6 @@ export function* updateDateEntry({ payload }: { type: string; payload: UpdateDat
         payload.modalHandler();
     } catch (error) {
         /* @ts-ignore:Error has type any */
-        if (error.response.data.message === "jwt expired") {
-            yield put(logoutSagaActionCreator({ message: "Sorry. Your token expired! Log in again." }));
-        } else {
-            /* @ts-ignore:Error has type any */
-            yield put(updateDateEntryFailed(error.response.data));
-        }
+        yield put(updateDateEntryFailed(error.response.data));
     }
 }

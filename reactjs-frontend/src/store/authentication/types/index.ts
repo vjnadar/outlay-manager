@@ -13,18 +13,15 @@ export interface SigninSuccessData extends SuccessData {
 }
 export type SigninSubmitObj = {
     credentials: Credentials;
-    modalHandler: (message: string) => void;
 };
 export type SignupSubmitObj = {
     credentials: Credentials;
-    modalHandler: (message: string) => void;
 };
 export type ResetPasswordRequestObj = {
     email: string;
 };
 export type ResetPasswordRequestSubmitObj = {
     resetPasswordRequestSubmitObj: ResetPasswordRequestObj;
-    modalHandler: (message?: string) => void;
 };
 export type NewPasswordValues = {
     password: string;
@@ -32,8 +29,6 @@ export type NewPasswordValues = {
 };
 export type ResetPasswordSubmitObj = {
     newPasswordObj: NewPasswordValues;
-    modalHandler: (message?: string) => void;
-    setResetSuccess: Dispatch<SetStateAction<boolean>>;
 };
 export type SyncLogoutObj =
     | {

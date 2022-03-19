@@ -10,7 +10,7 @@ export function* fetchStats({ payload }: { type: string; payload: FetchStatsObj 
     try {
         yield put(fetchStatsStarts());
         const response: AxiosResponse<FetchStatsResponse> = yield axios.put("/stats/getStats", payload.dateRange);
-        yield put(fetchStatsSuccessful({ statsData: response.data.result, callBack: payload.setSingleFlowtype }));
+        yield put(fetchStatsSuccessful({ statsData: response.data }));
     } catch (error) {
         /*  @ts-ignore: Error has type any. */
         const currentError = error?.response?.data ?? error;

@@ -9,6 +9,7 @@ const initialState: StatsPageState = {
     expense: [],
     loading: false,
     incomeLabel: "",
+    successData: "",
     expenseLabel: "",
     lastStartDate: "",
     lastEndDate: "",
@@ -27,16 +28,17 @@ function createStatsSlice() {
                 const currentState = state;
                 currentState.loading = false;
                 /* eslint-disable-next-line no-underscore-dangle */
-                const income = action.payload.statsData.filter((val: StatsData) => val._id.flowtype === "income");
+                const income = action.payload.statsData.result.filter((val: StatsData) => val._id.flowtype === "income");
                 /* eslint-disable-next-line no-underscore-dangle */
-                const expense = action.payload.statsData.filter((val: StatsData) => val?._id?.flowtype === "expense");
+                const expense = action.payload.statsData.result.filter((val: StatsData) => val?._id?.flowtype === "expense");
                 currentState.income = income;
                 currentState.expense = expense;
-                action.payload.callBack(income, expense);
+                currentState.successData = action.payload.statsData.message;
             },
             fetchStatsFailed: (state, action) => {
                 const currentState = state;
                 currentState.error = action.payload;
+                currentState.successData = "";
             },
             setDateEntries: (state, action) => {
                 const currentState = state;
@@ -44,6 +46,11 @@ function createStatsSlice() {
                 currentState.expenseLabel = action.payload.expenseDateLabel;
                 currentState.lastStartDate = action.payload.startDate;
                 currentState.lastEndDate = action.payload.endDate;
+            },
+            clearSuccessDataAndErrorData: (state) => {
+                const currentState = state;
+                currentState.successData = "";
+                currentState.error = null;
             }
         },
         extraReducers: (builder) => {
@@ -62,6 +69,6 @@ function createStatsSlice() {
     });
 }
 const { actions, reducer } = createStatsSlice();
-export const { fetchStatsStarts, fetchStatsSuccessful, fetchStatsFailed, setDateEntries } = actions;
+export const { fetchStatsStarts, fetchStatsSuccessful, fetchStatsFailed, setDateEntries, clearSuccessDataAndErrorData } = actions;
 export const fetchStatsSagaActionCreator = createAction<FetchStatsObj>(StatsPageSagaName.FetchStats);
 export default reducer;
