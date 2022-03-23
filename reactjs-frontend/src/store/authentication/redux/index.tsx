@@ -21,7 +21,7 @@ const initialState: AuthenticationState = {
 };
 function createAuthenticationSlice() {
     return createSlice({
-        name: "authentication",
+        name: "authenticationReducer",
         initialState,
         reducers: {
             authenticationStart: (state) => {

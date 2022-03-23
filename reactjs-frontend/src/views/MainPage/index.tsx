@@ -4,8 +4,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "reactstrap";
 
-import { MainViewAndControl, OutlayModalForm } from "../../components";
-import { Spinner } from "../../components/ui";
+import { MainViewAndControl, OutlayModalForm, Spinner } from "../../components";
 import { AppContext, MainPageContext } from "../../contexts";
 import { AppContextType, MainPageContextType } from "../../contexts/types";
 import { deleteDateEntrySagaActionCreator, getMainPageDataSagaActionCreator, postMainPageDataSagaActionCreator } from "../../store/mainPage/redux";

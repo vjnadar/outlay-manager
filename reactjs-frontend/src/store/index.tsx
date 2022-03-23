@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, EnhancedStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { all, fork } from "redux-saga/effects";
 
@@ -12,29 +12,33 @@ import { StatsPageSagaName } from "./statsPage/enums";
 import statsPageReducer from "./statsPage/redux";
 import watchStatsPage from "./statsPage/sagas";
 
-const sagaMiddleware = createSagaMiddleware();
-export default configureStore({
-    reducer: { authenticationReducer, mainPageReducer, statsPageReducer },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                // Ignore these action types
-                ignoredActions: [
-                    AuthenticationSagaNames.SignInSaga,
-                    AuthenticationSagaNames.SignUpSaga,
-                    AuthenticationSagaNames.ResetPasswordSaga,
-                    AuthenticationSagaNames.ResetPasswordRequestSaga,
-                    MainPageSagaNames.GetMainPageDataSaga,
-                    MainPageSagaNames.PostMainPageDataDaga,
-                    MainPageSagaNames.UpdateDateEntrySaga,
-                    MainPageSagaNames.DeleteDateEntrySaga,
-                    StatsPageSagaName.FetchStats
-                ]
-            }
-        }).concat(sagaMiddleware)
-});
+export default function configureStoreWithMiddlewares(initialState = {}): EnhancedStore {
+    const sagaMiddleware = createSagaMiddleware();
+    const store = configureStore({
+        reducer: { authenticationReducer, mainPageReducer, statsPageReducer },
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware({
+                serializableCheck: {
+                    // Ignore these action types
+                    ignoredActions: [
+                        AuthenticationSagaNames.SignInSaga,
+                        AuthenticationSagaNames.SignUpSaga,
+                        AuthenticationSagaNames.ResetPasswordSaga,
+                        AuthenticationSagaNames.ResetPasswordRequestSaga,
+                        MainPageSagaNames.GetMainPageDataSaga,
+                        MainPageSagaNames.PostMainPageDataDaga,
+                        MainPageSagaNames.UpdateDateEntrySaga,
+                        MainPageSagaNames.DeleteDateEntrySaga,
+                        StatsPageSagaName.FetchStats
+                    ]
+                }
+            }).prepend(sagaMiddleware),
+        preloadedState: initialState
+    });
 
-function* rootSaga() {
-    yield all([fork(watchAuthentication), fork(watchMainPage), fork(watchStatsPage)]);
+    function* rootSaga() {
+        yield all([fork(watchAuthentication), fork(watchMainPage), fork(watchStatsPage)]);
+    }
+    sagaMiddleware.run(rootSaga);
+    return store;
 }
-sagaMiddleware.run(rootSaga);

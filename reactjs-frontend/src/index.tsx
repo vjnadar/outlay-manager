@@ -10,8 +10,9 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import interceptors from "./interceptors";
 import reportWebVitals from "./reportWebVitals";
-import store from "./store";
+import configureStore from "./store";
 
+const store = configureStore();
 interceptors.setupInterceptors(store);
 ReactDOM.render(
     <React.StrictMode>

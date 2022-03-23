@@ -1,3 +1,4 @@
 import store from "..";
 
-export type RootState = ReturnType<typeof store.getState>;
+const storeState = store();
+export type RootState = ReturnType<typeof storeState.getState>;

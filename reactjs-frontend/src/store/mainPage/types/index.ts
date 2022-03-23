@@ -9,7 +9,7 @@ export type GrandTotalObj = {
     totalAmount: number;
 };
 export type GrandTotal = {
-    result: GrandTotalObj[];
+    result: [{ _id: "income"; totalAmount: number }, { _id: "expense"; totalAmount: number }];
 };
 export type Income = {
     _id: string;

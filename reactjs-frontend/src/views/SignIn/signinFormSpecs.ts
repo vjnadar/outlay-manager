@@ -19,7 +19,7 @@ export const signinFormSpecs: FormSpecification = {
         {
             type: FieldTypes.Password,
             name: "password",
-            label: "Password ",
+            label: "Password",
             initialValue: "",
             validation: {
                 type: FieldTypes.Password,
