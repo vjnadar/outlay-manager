@@ -1,7 +1,7 @@
 import "./Table.scss";
 
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { Button, Table as ReactstrapTable } from "reactstrap";
 
 import { AppContext, MainPageContext } from "../../../../contexts";

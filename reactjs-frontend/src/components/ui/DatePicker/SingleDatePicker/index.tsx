@@ -12,6 +12,7 @@ function SingleDatePicker({ date, dateChange, focused, focusChange }: SingleDate
     return (
         <MainSingleDatePicker
             /* @ts-ignore */
+            id="id"
             anchorDirection="right"
             date={setDate}
             /* @ts-ignore */

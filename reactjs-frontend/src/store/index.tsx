@@ -15,11 +15,11 @@ import watchStatsPage from "./statsPage/sagas";
 export default function configureStoreWithMiddlewares(initialState = {}): EnhancedStore {
     const sagaMiddleware = createSagaMiddleware();
     const store = configureStore({
+        preloadedState: initialState,
         reducer: { authenticationReducer, mainPageReducer, statsPageReducer },
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware({
                 serializableCheck: {
-                    // Ignore these action types
                     ignoredActions: [
                         AuthenticationSagaNames.SignInSaga,
                         AuthenticationSagaNames.SignUpSaga,
@@ -32,8 +32,7 @@ export default function configureStoreWithMiddlewares(initialState = {}): Enhanc
                         StatsPageSagaName.FetchStats
                     ]
                 }
-            }).prepend(sagaMiddleware),
-        preloadedState: initialState
+            }).prepend(sagaMiddleware)
     });
 
     function* rootSaga() {

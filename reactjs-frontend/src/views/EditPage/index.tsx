@@ -2,7 +2,7 @@ import { Formik } from "formik";
 import moment from "moment";
 import { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 import { Button, Col, Container, Row } from "reactstrap";
 
 import { Card, Modal, OutlayForm, Spinner } from "../../components";

@@ -27,9 +27,9 @@ export const StatsForm = React.memo(
                     {income.length || expense.length ? (
                         <Row>
                             <Col
-                                xs={{ size: 12, offset: 0 }}
-                                sm={{ size: 12, offset: 0 }}
-                                md={{ size: 12, offset: 0 }}
+                                xs={{ size: 11, offset: 0 }}
+                                sm={{ size: 11, offset: 0 }}
+                                md={{ size: 11, offset: 0 }}
                                 lg={{ size: 3, offset: 3 }}
                                 xl={{ size: 2, offset: 3 }}
                             >
@@ -38,7 +38,6 @@ export const StatsForm = React.memo(
                                         <b>Flowtype</b>
                                     </Label>
                                     <Input type="select" name="flowtype" id="flowtype" bsSize="sm" value={flowtype} onChange={formHandler}>
-                                        {" "}
                                         {income.length ? <option value="income">Income</option> : <option disabled>Income(no data)</option>}
                                         {expense.length ? <option value="expense">Expenditure</option> : <option disabled>Expense(no data)</option>}
                                     </Input>

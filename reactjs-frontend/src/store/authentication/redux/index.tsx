@@ -85,7 +85,6 @@ function createAuthenticationSlice() {
                 currentState.successData = null;
                 currentState.error = null;
                 currentState.token = "";
-                currentState.message = "";
             });
         }
     });

@@ -1,3 +1,5 @@
+import "./Graph.scss";
+
 import { Chart as ChartType } from "chart.js";
 import Chart from "chart.js/auto";
 import { createRef, MutableRefObject, useEffect, useRef } from "react";
@@ -73,6 +75,7 @@ export function Graph({ income, expense, flowtype, graphtype, incomeTitle, expen
                     },
                     options: {
                         responsive: true,
+                        maintainAspectRatio: false,
                         plugins: {
                             title: {
                                 display: true,
@@ -86,7 +89,7 @@ export function Graph({ income, expense, flowtype, graphtype, incomeTitle, expen
     }
     return (
         <Row>
-            <Col xs={{ size: 8, offset: 2 }} sm={{ size: 8, offset: 2 }} md={{ size: 8, offset: 2 }} lg={{ size: 7, offset: 3 }} xl={{ size: 4, offset: 3 }}>
+            <Col xs={{ size: 12, offset: 0 }} sm={{ size: 12, offset: 0 }} md={{ size: 12, offset: 0 }} lg={{ size: 7, offset: 3 }} xl={{ size: 6, offset: 3 }}>
                 {income.length || expense.length ? (
                     <Card body>
                         <canvas id="graph" ref={graphRef} />

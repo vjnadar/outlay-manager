@@ -29,4 +29,7 @@
   a:visited {
     color: rgb(43, 126, 165);
   }
+  @media (max-width: 26rem) {
+    display: none;
+  }
 }

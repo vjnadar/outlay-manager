@@ -2,7 +2,7 @@ import "./Signup.scss";
 
 import { MouseEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
 
 import { FormFactory, Modal, Spinner } from "../../components";

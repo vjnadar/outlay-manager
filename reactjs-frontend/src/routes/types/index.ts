@@ -1,4 +1,3 @@
-import { SvgIconComponent } from "@material-ui/icons";
 import { LazyExoticComponent, MemoExoticComponent } from "react";
 
 export type Routes = {

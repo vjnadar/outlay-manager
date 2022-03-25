@@ -1,5 +1,3 @@
-import { Moment } from "moment";
-
 import { ErrorData } from "../../../generalTypes";
 import { FlowType } from "../../../views/MainPage/types";
 
