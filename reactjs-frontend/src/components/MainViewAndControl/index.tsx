@@ -19,7 +19,7 @@ function MainViewAndControl({ grandTotal, date, focused, entryFromDate }: MainVi
     return (
         <>
             <Row>
-                <Col xs={{ offset: 8 }} sm={{ offset: 1 }} md={{ offset: 1 }} lg={{ offset: 4 }} xl={{ offset: 3 }}>
+                <Col xs={{ offset: 7 }} sm={{ offset: 1 }} md={{ offset: 1 }} lg={{ offset: 4 }} xl={{ offset: 3 }}>
                     <DatePicker date={date} dateChange={mainPageContext.dateChangeHandler} focused={focused} focusChange={mainPageContext.focusChangeHandler} />
                 </Col>
             </Row>
