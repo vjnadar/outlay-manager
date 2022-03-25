@@ -1,6 +1,6 @@
 <div align="center">
     <h1 align="center"><b>Outlay Manager</b></h1>
-    <span align="center"><a href="https://eager-kalam-5e53c6.netlify.app"><b>Live preview </b></a>|<a href="mailto:vjn8490@gmail.com"><b> Contact me</b></a>
+    <span align="center"><a href="https://clever-kitten-8484bf.netlify.app"><b>Live preview </b></a>|<a href="mailto:vjn8490@gmail.com"><b> Contact me</b></a>
     <br/>
 </div>
  
@@ -23,16 +23,17 @@ A Full Stack Web Application that uses **React JS, Redux JS**, **Node JS/Express
 
 ## Frontend
 **Technology stack:**
-1. JavaScript (ES6+)
+1. Typescript
 2. React JS
-3. React-Router
-4. Redux JS
+3. React-Router 6
+4. Redux Toolkit
 5. React hooks
-5. Reactstrap(a flavour of Bootstrap)
-6. Sass
-7. Chart JS
-8. Formik (form handler)
-9. Yup (form validator)
+6. Reactstrap(a flavour of Bootstrap)
+7. Sass
+8. Chart JS
+9. Formik (form handler)
+10. Yup (form validator)
+11. React Testing Library/Jest    
 
 <p align="left">
   <img src="https://i.imgur.com/FEusJnt.png" width="50%" height="50%">
