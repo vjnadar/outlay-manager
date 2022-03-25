@@ -5,11 +5,6 @@ const statsController = require("../../controllers/statsController/statsControll
 const authentication = require("../../middlewares/validators/authentication/authenticationValidator");
 const statsRouteValidator = require("../../middlewares/validators/stats/statsRouteValidator");
 
-router.put(
-  "/getStats",
-  authentication.checkAuthentication,
-  statsRouteValidator.getStatsValidator,
-  statsController.getStats
-);
+router.put("/getStats", authentication.checkAuthentication, statsRouteValidator.getStatsValidator, statsController.getStats);
 
 module.exports = router;
