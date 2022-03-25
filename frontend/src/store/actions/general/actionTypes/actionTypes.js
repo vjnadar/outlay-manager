@@ -1,1 +1,0 @@
-export const GENERAL_CLEAR_ALL = "GENERAL_CLEAR_ALL";

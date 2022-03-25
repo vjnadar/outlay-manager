@@ -1,5 +1,0 @@
-export const GET_STATS = "GET_STATS";
-export const GET_STATS_START = "GET_STATS_START";
-export const GET_STATS_SUCCESS = "GET_STATS_SUCCESS";
-export const GET_STATS_FAILED = "GET_STATS_FAILED";
-export const SET_LAST_DATE_ENTRY = "SET_LAST_DATE_ENTRY";
