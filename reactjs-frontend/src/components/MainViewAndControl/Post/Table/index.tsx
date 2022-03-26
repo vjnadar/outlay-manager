@@ -65,11 +65,10 @@ function Table({ entryFromDate }: TableProps): JSX.Element {
     );
 
     const setModalOption = useCallback(() => {
-        if (mounted) {
+        if (mounted.current) {
             setIsOpen(!isOpen);
         }
-    }, []);
-
+    }, [mounted, isOpen, setIsOpen]);
     const deleteEntry = useCallback(() => {
         deleteDateEntry(id, setModalOption);
     }, [id, deleteDateEntry, setModalOption]);
