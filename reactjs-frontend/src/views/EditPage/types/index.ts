@@ -1,5 +1,3 @@
-import { string } from "yup";
-
 import { FlowType } from "../../MainPage/types";
 
 export type EditPageStateType = {
