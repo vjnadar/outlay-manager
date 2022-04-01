@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import React from "react";
+import { memo } from "react";
 
 import { outlayFormValidationSchema } from "../../utilityMethods";
 import { Modal, OutlayForm } from "..";
@@ -36,4 +36,4 @@ function OutlayModalForm({ isOpen, modalHandler, handleSubmit, initialValues, da
     );
 }
 
-export default OutlayModalForm;
+export default memo(OutlayModalForm);

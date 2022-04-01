@@ -1,5 +1,5 @@
 import Avatar from "@material-ui/core/Avatar";
-import { ChangeEvent, createRef, Fragment } from "react";
+import { ChangeEvent, createRef, Fragment, memo } from "react";
 import { Link } from "react-router-dom";
 
 import ValidatorTextbox from "../../ui/ValidatorTextbox";
@@ -175,4 +175,4 @@ function FieldFactory({ formProps, inputFields }: FieldFactoryProps): JSX.Elemen
         </>
     );
 }
-export default FieldFactory;
+export default memo(FieldFactory);

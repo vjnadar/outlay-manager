@@ -1,5 +1,7 @@
 import "./ButtonFactory.scss";
 
+import { memo } from "react";
+
 import { ButtonTypes } from "./enums";
 import { ButtonFactoryProps } from "./types";
 
@@ -53,4 +55,4 @@ function ButtonFactory({ buttonSpecs, secondButton, resetForm }: ButtonFactoryPr
     /* eslint-disable */
     return <>{button}</>;
 }
-export default ButtonFactory;
+export default memo(ButtonFactory);

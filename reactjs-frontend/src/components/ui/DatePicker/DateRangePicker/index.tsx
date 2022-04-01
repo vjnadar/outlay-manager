@@ -1,5 +1,5 @@
 import { Moment } from "moment";
-import React from "react";
+import { memo } from "react";
 import { DateRangePicker as ReactDateRangePicker } from "react-dates";
 
 import { DateRangePickerProps } from "./types";
@@ -26,4 +26,4 @@ function DateRangePicker({ dataAvailable, startDate, endDate, dateChangeHandler,
     );
 }
 
-export default React.memo(DateRangePicker);
+export default memo(DateRangePicker);

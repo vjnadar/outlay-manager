@@ -2,7 +2,7 @@ import "./MainViewAndControl.scss";
 
 import { faMoneyBillAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { memo, useContext } from "react";
+import { useContext } from "react";
 import { Button, Col, Row } from "reactstrap";
 
 import { MainPageContext } from "../../contexts";
@@ -76,4 +76,4 @@ function MainViewAndControl({ grandTotal, date, focused, entryFromDate }: MainVi
         </>
     );
 }
-export default memo(MainViewAndControl);
+export default MainViewAndControl;

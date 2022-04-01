@@ -1,7 +1,7 @@
 import "./FormFactory.scss";
 
 import { Formik, FormikHelpers, FormikValues } from "formik";
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import Reference from "yup/lib/Reference";
 
@@ -107,4 +107,4 @@ function FormFactory({ formSpecs, submit, afterForm, beforeForm, secondButton }:
     }
     return <div>{form}</div>;
 }
-export default memo(FormFactory);
+export default FormFactory;
